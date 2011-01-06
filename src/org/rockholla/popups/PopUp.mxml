@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow 
+	minWidth="200"
+	minHeight="100"
+	creationComplete="_onCreationComplete();"
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			//-----------------------------------------------------------
+			//
+			// OTHER CLASS METHODS
+			//
+			//-----------------------------------------------------------
+			
+			/**
+			 * Run when the pop up is successfully created, centering it and
+			 * adding any event listeners
+			 * 
+			 */
+			protected function _onCreationComplete():void
+			{
+				PopUpManager.centerPopUp(this);
+				this.addEventListener(CloseEvent.CLOSE, _onClose);
+			}
+			
+			/**
+			 * What to execute in order to close this pop up
+			 * 
+			 * @param event the event related to closing
+			 * 
+			 */
+			protected function _onClose(event:Event = null):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function close():void
+			{
+				this._onClose();
+			}
+			
+		]]>
+	</fx:Script>
+	
+</s:TitleWindow>

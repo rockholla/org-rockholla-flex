@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" version="3">
+  <includeClasses>
+    <classEntry path="com.patrickforce.preloaders.PreloaderDisplayBase"/>
+    <classEntry path="com.patrickforce.effects.RotationInstance"/>
+    <classEntry path="com.patrickforce.geom.FlexMatrixTransformer"/>
+    <classEntry path="com.patrickforce.effects.ExternalPointRotationInstance"/>
+    <classEntry path="com.patrickforce.controls.Button"/>
+    <classEntry path="com.patrickforce.popups.PopUp"/>
+    <classEntry path="com.patrickforce.controls.CLinkedBitmapImage"/>
+    <classEntry path="com.patrickforce.skins.LinkedBitmapImageSkin"/>
+    <classEntry path="com.patrickforce.controls.LinkedBitmapImage"/>
+    <classEntry path="com.patrickforce.skins.BlankDividerSkin"/>
+    <classEntry path="com.patrickforce.controls.CButtonBitmapImage"/>
+    <classEntry path="com.patrickforce.controls.ButtonBitmapImage"/>
+    <classEntry path="com.patrickforce.skins.ButtonBitmapImageSkin"/>
+    <classEntry path="com.patrickforce.controls.ImageLabelCheckbox"/>
+    <classEntry path="com.patrickforce.skins.ImageLabelCheckboxSkin"/>
+    <classEntry path="com.abdulqabiz.utils.QueryString"/>
+    <classEntry path="com.patrickforce.utils.ObjectHelper"/>
+    <classEntry path="org.rockholla.utils.TypesUtil"/>
+    <classEntry path="org.rockholla.utils.MathUtil"/>
+    <classEntry path="org.rockholla.controls.CachedImage"/>
+    <classEntry path="org.rockholla.controls.ImageCache"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
