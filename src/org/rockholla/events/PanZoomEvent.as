@@ -14,14 +14,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *	 
  */
-package org.rockholla.utils
+package org.rockholla.events
 {
-	public class MathUtil
+	import flash.events.Event;
+	
+	public class PanZoomEvent extends Event
 	{
-		public static function randomInRange(min:Number, max:Number):Number 
+		
+		public static const ZOOM:String = "zoom";
+		public static const PAN:String = "pan";
+		
+		public function PanZoomEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
-			var scale:Number = max - min;
-			return Math.random() * scale + min;
+			super(type, bubbles, cancelable);
 		}
 	}
 }

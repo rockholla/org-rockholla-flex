@@ -22,6 +22,7 @@
     <classEntry path="org.rockholla.utils.MathUtil"/>
     <classEntry path="org.rockholla.controls.CachedImage"/>
     <classEntry path="org.rockholla.controls.ImageCache"/>
+    <classEntry path="org.rockholla.events.PanZoomEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

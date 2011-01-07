@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
-
-ADOBE SYSTEMS INCORPORATED
-Copyright 2008 Adobe Systems Incorporated
-All Rights Reserved.
-
-NOTICE: Adobe permits you to use, modify, and distribute this file
-in accordance with the terms of the license agreement accompanying it.
-
+	This is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 -->
 
-<!--- The default skin class for the Spark Button component.  
-
-@see spark.components.Button
-
-@langversion 3.0
-@playerversion Flash 10
-@playerversion AIR 1.5
-@productversion Flex 4
--->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
 			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009" alpha.disabled="0.5" xmlns:mx="library://ns.adobe.com/flex/mx">
 	<fx:Metadata>[HostComponent("org.rockholla.controls.ButtonBitmapImage")]</fx:Metadata>

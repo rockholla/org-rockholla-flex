@@ -1,3 +1,19 @@
+/**
+ * 
+ *	This is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *	 
+ */
 package org.rockholla.controls.panzoom {
 	
 	import com.adobe.utils.mousewheel.MouseWheelEnabler;
@@ -17,7 +33,10 @@ package org.rockholla.controls.panzoom {
 	import mx.managers.CursorManager;
 	
 	import org.rockholla.containers.LoadingContainer;
+	import org.rockholla.events.PanZoomEvent;
 	
+	[Event(name="zoom", type="org.rockholla.events.PanZoomEvent")]
+	[Event(name="pan", type="org.rockholla.events.PanZoomEvent")]
 	public class PanZoomComponent extends LoadingContainer 
 	{
 			
@@ -86,6 +105,8 @@ package org.rockholla.controls.panzoom {
 				this._contentTopLeft.y = this.content.y;	
 			}
 			this._updateViewCenter();
+			
+			this.dispatchEvent(new PanZoomEvent(PanZoomEvent.PAN));
 			
 		}
 		
@@ -276,6 +297,7 @@ package org.rockholla.controls.panzoom {
 			
 			this.content.x = this._contentTopLeft.x - (this._mouseDownPosition.x - this.parent.mouseX);
 			this.content.y = this._contentTopLeft.y - (this._mouseDownPosition.y - this.parent.mouseY);
+			this.dispatchEvent(new PanZoomEvent(PanZoomEvent.PAN));
 			
 		}
 		
@@ -390,6 +412,8 @@ package org.rockholla.controls.panzoom {
 				this._enforcePlacementRules();
 				
 				TweenLite.to(this.content, 0.2, { scaleX: this.scale, scaleY: this.scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
+			
+				this.dispatchEvent(new PanZoomEvent(PanZoomEvent.ZOOM));
 			}
 			
 		}
