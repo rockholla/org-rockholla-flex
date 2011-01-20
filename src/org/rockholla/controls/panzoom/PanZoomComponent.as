@@ -60,6 +60,8 @@ package org.rockholla.controls.panzoom {
 		public var contentBackgroundColor:uint = 0xFFFFFF;
 		[Bindable]
 		public var contentBackgroundAlpha:Number = 1;
+		[Bindable]
+		public var childPreventsPan:Boolean = true;
 		
 		protected var _contentWidth:Number;
 		protected var _contentHeight:Number;
@@ -316,7 +318,7 @@ package org.rockholla.controls.panzoom {
 		
 		protected function _onMouseOver(event:MouseEvent):void 
 		{ 
-			if(event.target == this.content)
+			if((this.childPreventsPan == true && event.target == this.content) || this.childPreventsPan == false)
 			{
 				this._setCursorHandOpen();
 				this._activateNormalMouseEvents();
