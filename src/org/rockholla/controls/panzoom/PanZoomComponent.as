@@ -24,20 +24,21 @@ package org.rockholla.controls.panzoom {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import mx.containers.Canvas;
 	import mx.controls.HScrollBar;
 	import mx.controls.VScrollBar;
+	import mx.core.Container;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	import mx.events.ResizeEvent;
 	import mx.events.ScrollEvent;
 	import mx.managers.CursorManager;
 	
-	import org.rockholla.containers.LoadingContainer;
 	import org.rockholla.events.PanZoomEvent;
 	
 	[Event(name="zoom", type="org.rockholla.events.PanZoomEvent")]
 	[Event(name="pan", type="org.rockholla.events.PanZoomEvent")]
-	public class PanZoomComponent extends LoadingContainer 
+	public class PanZoomComponent extends Canvas 
 	{
 			
 		public static const TOP_LEFT:String = "topLeft";
@@ -45,7 +46,9 @@ package org.rockholla.controls.panzoom {
 		public static const BOTTOM_LEFT:String = "bottomLeft";
 		public static const BOTTOM_RIGHT:String = "bottomRight";
 		
-		public var content:PanZoomContent = new PanZoomContent();
+		protected var _initialized:Boolean = false;
+		
+		public var content:Container = new Container();
 		protected var _contentWidth:Number;
 		protected var _contentHeight:Number;
 		
@@ -70,24 +73,28 @@ package org.rockholla.controls.panzoom {
 		public function PanZoomComponent() 
 		{
 			super();
+			this.horizontalScrollPolicy = "off";
+			this.verticalScrollPolicy = "off";
+			this.addEventListener(FlexEvent.CREATION_COMPLETE, this._onCreationComplete);
 		}
 		
-		override protected function _onCreationComplete(event:FlexEvent):void 
+		protected function _onCreationComplete(event:FlexEvent):void 
 		{
-			super._onCreationComplete(event);
 			
 			this.content.width = this._contentWidth;
 			this.content.height = this._contentHeight;
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, function(event:Event):void { MouseWheelEnabler.init(stage); });
 			this.content.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver);
-			this._activateNormalMouseEvents();
+			this._activateNormalMouseEvents(true);
 			
 			this._updateViewCenter();
 			
 			this._hScrollBar.addEventListener(ScrollEvent.SCROLL, _onScrollBarScroll);
 			this._vScrollBar.addEventListener(ScrollEvent.SCROLL, _onScrollBarScroll);
 			this.addEventListener(ResizeEvent.RESIZE, _enforcePlacementRules);
+			
+			this.zoom(1);
 		
 		}
 		
@@ -113,13 +120,43 @@ package org.rockholla.controls.panzoom {
 		override protected function createChildren():void 
 		{
 			
-			super.createChildren();
+			this.addChild(this.content);
+			this.addChild(this._vScrollBar);
+			this.addChild(this._hScrollBar);
+			this.addChild(this._bottomRightMask);
 			
-			this.addElement(this.content);
-			this.addElement(this._vScrollBar);
-			this.addElement(this._hScrollBar);
-			this.addElement(this._bottomRightMask);
+			this._initialized = true;
+			
+			super.createChildren();
 
+		}
+		
+		override public function addChild(child:DisplayObject):DisplayObject
+		{
+			
+			if(this._initialized)
+			{
+				return this.content.addChild(child);
+			}
+			else
+			{
+				return super.addChild(child);
+			}
+			
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			
+			if(this._initialized)
+			{
+				return this.content.addChildAt(child, index);
+			}
+			else
+			{
+				return super.addChildAt(child, index);
+			}
+			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
@@ -237,15 +274,10 @@ package org.rockholla.controls.panzoom {
 			this._backgroundColor = value; 
 		}
 		
-		public function addContent(child:DisplayObject):DisplayObject 
-		{ 
-			return this.content.addChild(child);
-		}
-		
-		protected function _activateNormalMouseEvents():void 
+		protected function _activateNormalMouseEvents(isFirstActivation:Boolean = false):void 
 		{
 			
-			if(this.content.hasEventListener(MouseEvent.MOUSE_DOWN))
+			if(this.content.hasEventListener(MouseEvent.MOUSE_DOWN) && !isFirstActivation)
 			{
 				return;
 			}
@@ -268,7 +300,7 @@ package org.rockholla.controls.panzoom {
 		
 		protected function _onMouseOver(event:MouseEvent):void 
 		{ 
-			if(event.target is PanZoomContent)
+			if(event.target == this.content)
 			{
 				this._setCursorHandOpen();
 				this._activateNormalMouseEvents();
