@@ -1,8 +1,9 @@
 The Rockholla.org Flex Library
 -----------------------------------------------------------
 
-This library contains components relevant to both Flex 3 and Flex 4 application development.
-In some cases, components will only function in Flex 4.
+This library contains components relevant to both Flex 3 and Flex 4 
+application development.  In some cases, components will only 
+function in Flex 4.
 
 /**
  * 
