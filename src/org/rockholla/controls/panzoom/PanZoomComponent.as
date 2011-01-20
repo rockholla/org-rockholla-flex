@@ -49,14 +49,24 @@ package org.rockholla.controls.panzoom {
 		protected var _initialized:Boolean = false;
 		
 		public var content:Container = new Container();
+		
+		[Bindable]
+		public var contentBorderColor:uint = 0xFFFFFF;
+		[Bindable]
+		public var contentBorderAlpha:Number = 1;
+		[Bindable]
+		public var contentBorderThickness:Number = 1;
+		[Bindable]
+		public var contentBackgroundColor:uint = 0xFFFFFF;
+		[Bindable]
+		public var contentBackgroundAlpha:Number = 1;
+		
 		protected var _contentWidth:Number;
 		protected var _contentHeight:Number;
 		
 		protected var _scaleMin:Number = 0.125;
 		protected var _scaleMax:Number = 5;
 		protected var _scale:Number = 1;
-		
-		protected var _backgroundColor:uint;
 		
 		protected var _vScrollBar:VScrollBar = new VScrollBar();
 		protected var _hScrollBar:HScrollBar = new HScrollBar();
@@ -119,6 +129,17 @@ package org.rockholla.controls.panzoom {
 		
 		override protected function createChildren():void 
 		{
+			
+			this.content.graphics.clear();
+			
+			// draw the background
+			this.content.graphics.beginFill(this.contentBackgroundColor, this.contentBackgroundAlpha);
+			this.content.graphics.drawRect(0, 0, this._contentWidth, this._contentHeight);
+			this.content.graphics.endFill();
+			
+			// draw the border
+			this.content.graphics.lineStyle(this.contentBorderThickness, this.contentBorderColor, this.contentBorderAlpha);
+			this.content.graphics.drawRect(0, 0, this._contentWidth, this._contentHeight);
 			
 			this.addChild(this.content);
 			this.addChild(this._vScrollBar);
@@ -267,11 +288,6 @@ package org.rockholla.controls.panzoom {
 		public function get scale():Number 
 		{ 
 			return this._scale; 
-		}
-		
-		public function set backgroundColor(value:uint):void 
-		{ 
-			this._backgroundColor = value; 
 		}
 		
 		protected function _activateNormalMouseEvents(isFirstActivation:Boolean = false):void 
