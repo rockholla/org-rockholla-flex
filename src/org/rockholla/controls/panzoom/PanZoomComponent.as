@@ -14,7 +14,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *	 
  */
-package org.rockholla.controls.panzoom {
+package org.rockholla.controls.panzoom 
+{
 	
 	import com.adobe.utils.mousewheel.MouseWheelEnabler;
 	import com.greensock.TweenLite;
@@ -48,7 +49,7 @@ package org.rockholla.controls.panzoom {
 		
 		protected var _initialized:Boolean = false;
 		
-		public var content:Container = new Container();
+		public var content:Canvas = new Canvas();
 		
 		[Bindable]
 		public var contentBorderColor:uint = 0xFFFFFF;
@@ -368,7 +369,7 @@ package org.rockholla.controls.panzoom {
 		
 		protected function _onMouseOut(event:MouseEvent):void 
 		{ 
-			CursorManager.removeAllCursors(); 
+			CursorManager.removeAllCursors();	
 		}
 		
 		protected function _enforcePlacementRules(event:Event = null):void 
@@ -432,7 +433,8 @@ package org.rockholla.controls.panzoom {
 		protected function _setCursorHandOpen():void 
 		{
 			
-			if(CursorManager.currentCursorID) {
+			if(CursorManager.currentCursorID) 
+			{
 				CursorManager.removeCursor(CursorManager.currentCursorID);
 			}
 			CursorManager.setCursor(this._iconHandOpen);
@@ -442,7 +444,8 @@ package org.rockholla.controls.panzoom {
 		protected function _setCursorHandClosed():void 
 		{
 			
-			if(CursorManager.currentCursorID) {
+			if(CursorManager.currentCursorID) 
+			{
 				CursorManager.removeCursor(CursorManager.currentCursorID);
 			}
 			CursorManager.setCursor(this._iconHandClosed);
