@@ -183,6 +183,26 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		override public function getChildren():Array
+		{
+			return this.content.getChildren();
+		}
+		
+		override public function getChildAt(index:int):DisplayObject
+		{
+			return this.content.getChildAt(index);
+		}
+		
+		override public function getChildIndex(child:DisplayObject):int
+		{
+			return this.content.getChildIndex(child);
+		}
+		
+		override public function getChildByName(name:String):DisplayObject
+		{
+			return this.content.getChildByName(name);
+		}
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
 			
