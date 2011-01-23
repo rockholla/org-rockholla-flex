@@ -48,6 +48,7 @@ package org.rockholla.controls.panzoom
 		public static const BOTTOM_RIGHT:String = "bottomRight";
 		
 		protected var _initialized:Boolean = false;
+		protected var _created:Boolean = false;
 		
 		public var content:Canvas = new Canvas();
 		
@@ -108,6 +109,8 @@ package org.rockholla.controls.panzoom
 			this.addEventListener(ResizeEvent.RESIZE, _enforcePlacementRules);
 			
 			this.zoom(1);
+			
+			this._created = true;
 		
 		}
 		
@@ -185,22 +188,50 @@ package org.rockholla.controls.panzoom
 		
 		override public function getChildren():Array
 		{
-			return this.content.getChildren();
+			if(this._created)
+			{
+				return this.content.getChildren();
+			}
+			else
+			{
+				return super.getChildren();
+			}
 		}
 		
 		override public function getChildAt(index:int):DisplayObject
 		{
-			return this.content.getChildAt(index);
+			if(this._created)
+			{
+				return this.content.getChildAt(index);	
+			}
+			else
+			{
+				return super.getChildAt(index);
+			}
 		}
 		
 		override public function getChildIndex(child:DisplayObject):int
 		{
-			return this.content.getChildIndex(child);
+			if(this._created)
+			{
+				return this.content.getChildIndex(child);	
+			}
+			else
+			{
+				return super.getChildIndex(child);
+			}
 		}
 		
 		override public function getChildByName(name:String):DisplayObject
 		{
-			return this.content.getChildByName(name);
+			if(this._created)
+			{
+				return this.content.getChildByName(name);		
+			}
+			else
+			{
+				return super.getChildByName(name);
+			}
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
