@@ -3,10 +3,10 @@ please use the latest version SWC.
 
 CHANGE LOG
 ------------------------------------------------------------------
-- 2011-01-20: 1.0
+- 2011-01-20: 1.0.0
 	1) First official release
 	
-- 2011-01-22: 1.1
+- 2011-01-22: 1.1.0
 	1) Minor release to enable overrides for getChild-related methods in PanZoomComponent, needing to pull the children from the embedded content container.
 
 - 2011-01-22: 1.1.1
