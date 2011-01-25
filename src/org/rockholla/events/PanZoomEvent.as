@@ -1,5 +1,4 @@
-/**
- * 
+/*
  *	This is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,12 +17,26 @@ package org.rockholla.events
 {
 	import flash.events.Event;
 	
+	/**
+	 * An event specific to the PanZoomComponent
+	 * 
+	 */
 	public class PanZoomEvent extends Event
 	{
 		
+		/**
+		 * Event relevant to zooming
+		 */
 		public static const ZOOM:String = "zoom";
+		/**
+		 * Event relevant to panning
+		 */
 		public static const PAN:String = "pan";
 		
+		/**
+		 * Constructor
+		 * 
+		 */
 		public function PanZoomEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

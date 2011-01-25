@@ -1,0 +1,368 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../override.css" type="text/css"><meta name="keywords" content="PanZoomComponent,org.rockholla.controls.panzoom.PanZoomComponent,BOTTOM_LEFT,BOTTOM_RIGHT,TOP_LEFT,TOP_RIGHT,_bottomRightMask,_contentHeight,_contentTopLeft,_contentWidth,_created,_hScrollBar,_initialized,_mouseDownPosition,_scale,_scaleMax,_scaleMin,_vScrollBar,_viewCenter,childPreventsPan,content,contentBackgroundAlpha,contentBackgroundColor,contentBorderAlpha,contentBorderColor,contentBorderThickness,contentHeight,contentWidth,scale,scaleMax,scaleMin,_activateNormalMouseEvents,_cancelNormalMouseEvents,_contentPointInView,_cornerPointInView,_enforcePlacementRules,_onCreationComplete,_onMouseDown,_onMouseDownMove,_onMouseOut,_onMouseOver,_onMouseUp,_onMouseWheel,_onScrollBarScroll,_setCursorHandClosed,_setCursorHandOpen,_updateScrollBars,_updateViewCenter,addChild,addChildAt,createChildren,getChildAt,getChildByName,getChildIndex,getChildren,updateDisplayList,zoom,zoomDirectional"><title>org.rockholla.controls.panzoom.PanZoomComponent</title></head><body><script language="javascript" type="text/javascript" src="../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'PanZoomComponent - API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?org/rockholla/controls/panzoom/PanZoomComponent.html&amp;org/rockholla/controls/panzoom/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">PanZoomComponent</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#constantSummary">Constants</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PanZoomComponent"); titleBar_setSubNav(true,true,false,false,false,false,true,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">org.rockholla.controls.panzoom</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  PanZoomComponent</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">PanZoomComponent  <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> mx.containers.Canvas</td></tr></table><p></p><table cellpadding="0" cellspacing="0" border="0"><tr><td style="white-space:nowrap" valign="top"><b> Language Version :&nbsp;</b></td><td>ActionScript 3.0</td></tr></table><p></p><p></p><p></p>
+	 The PanZoomComponent is a Flex 3 and 4 compatible control, capable of receiving standard flex components,
+	 placing them within a container that can be panned and zoomed via dragging, dropping, and mouse wheel operation.
+	 
+	 <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#childPreventsPan" class="signatureLink">childPreventsPan</a> : Boolean<div class="summaryTableDescription">
+		 When true, while the mouse is over a child within the content container disables normal panning
+		 by drag and drop.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#content" class="signatureLink">content</a> : Canvas<div class="summaryTableDescription">
+		 This is the container where all custom children are placed.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentBackgroundAlpha" class="signatureLink">contentBackgroundAlpha</a> : Number<div class="summaryTableDescription">
+		 Sets the background alpha of the content container, or pannable/zoomable area.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentBackgroundColor" class="signatureLink">contentBackgroundColor</a> : uint<div class="summaryTableDescription">
+		 Sets the background color of the content container, or pannable/zoomable area.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentBorderAlpha" class="signatureLink">contentBorderAlpha</a> : Number<div class="summaryTableDescription">
+		 Sets the border alpha of the content container, or pannable/zoomable area.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentBorderColor" class="signatureLink">contentBorderColor</a> : uint<div class="summaryTableDescription">
+		 Sets the border color of the content container, or pannable/zoomable area.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentBorderThickness" class="signatureLink">contentBorderThickness</a> : Number<div class="summaryTableDescription">
+		 Sets the border thickness of the content container, or pannable/zoomable area.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentHeight" class="signatureLink">contentHeight</a> : Number<div class="summaryTableDescription">
+		 Gets the height of the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#contentWidth" class="signatureLink">contentWidth</a> : Number<div class="summaryTableDescription">
+		 Gets the width of the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#scale" class="signatureLink">scale</a> : Number<div class="summaryTableDescription">
+		 Gets the current scale or zoom level
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#scaleMax" class="signatureLink">scaleMax</a> : Number<div class="summaryTableDescription">
+		 Gets the maximum zoom level
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#scaleMin" class="signatureLink">scaleMin</a> : Number<div class="summaryTableDescription">
+		 Gets the minimum zoom level
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr></table></div><a name="protectedPropertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProtectedProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_bottomRightMask" class="signatureLink">_bottomRightMask</a> : UIComponent<div class="summaryTableDescription">
+		 A simple rectangular mask to be placed at the bottom-right most part of the component, for covering
+		 the area where the scrollbars meet
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_contentHeight" class="signatureLink">_contentHeight</a> : Number<div class="summaryTableDescription">
+		 The height of the container that can be panned/zoomed
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_contentTopLeft" class="signatureLink">_contentTopLeft</a> : Point<div class="summaryTableDescription">
+		 Tracks where the top, left point of the content container is for panning/zooming purposes
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_contentWidth" class="signatureLink">_contentWidth</a> : Number<div class="summaryTableDescription">
+		 The width of the container that can be panned/zoomed
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_created" class="signatureLink">_created</a> : Boolean = false<div class="summaryTableDescription">
+		 Tracks whether or not this entire component has been created.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_hScrollBar" class="signatureLink">_hScrollBar</a> : HScrollBar<div class="summaryTableDescription">
+		 Our custom horizontal scroll bar, replacing the built-in Flex one
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_initialized" class="signatureLink">_initialized</a> : Boolean = false<div class="summaryTableDescription">
+		 Tracks whether or not this has component has been initialized (necessary properties set and required 
+		 children created).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_mouseDownPosition" class="signatureLink">_mouseDownPosition</a> : Point<div class="summaryTableDescription">
+		 Tracks a point where the mouse was clicked for panning/zooming purposes
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_scale" class="signatureLink">_scale</a> : Number = 1<div class="summaryTableDescription">
+		 The initial zoom level
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_scaleMax" class="signatureLink">_scaleMax</a> : Number = 5<div class="summaryTableDescription">
+		 The maximum zoom level allowed (where 1 is actual size, 100%)
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_scaleMin" class="signatureLink">_scaleMin</a> : Number = 0.125<div class="summaryTableDescription">
+		 The minimum zoom level allowed (where 1 is actual size, 100%)
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_viewCenter" class="signatureLink">_viewCenter</a> : Point<div class="summaryTableDescription">
+		 Tracks the current center point of the viewable window into the content container
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#_vScrollBar" class="signatureLink">_vScrollBar</a> : VScrollBar<div class="summaryTableDescription">
+		 Our custom vertical scroll bar, replacing the built-in Flex one
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#PanZoomComponent()" class="signatureLink">PanZoomComponent</a>()</div><div class="summaryTableDescription">
+		 Constructor
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#addChild()" class="signatureLink">addChild</a>(child:DisplayObject):DisplayObject</div><div class="summaryTableDescription">[override] 
+		 Replaces the default addChild method for this component (only after initialization).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#addChildAt()" class="signatureLink">addChildAt</a>(child:DisplayObject, index:int):DisplayObject</div><div class="summaryTableDescription">[override] 
+		 Replaces the default addChildAt method for this component (only after initialization).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getChildAt()" class="signatureLink">getChildAt</a>(index:int):DisplayObject</div><div class="summaryTableDescription">[override] 
+		 Replaces the default getChildAt method for this component (only after creation).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getChildByName()" class="signatureLink">getChildByName</a>(name:String):DisplayObject</div><div class="summaryTableDescription">[override] 
+		 Replaces the default getChildByName method for this component (only after creation).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getChildIndex()" class="signatureLink">getChildIndex</a>(child:DisplayObject):int</div><div class="summaryTableDescription">[override] 
+		 Replaces the default getChildIndex method for this component (only after creation).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getChildren()" class="signatureLink">getChildren</a>():Array</div><div class="summaryTableDescription">[override] 
+		 Replaces the default getChildren method for this component (only after creation).</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#zoom()" class="signatureLink">zoom</a>(toScale:Number):void</div><div class="summaryTableDescription">
+		 Executes a zoom to a particular level/scale
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#zoomDirectional()" class="signatureLink">zoomDirectional</a>(directionalSpeed:int):void</div><div class="summaryTableDescription">
+		 Zooms in a particular directional speed relative to the current scale.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr></table></div><a name="protectedMethodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProtectedMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_activateNormalMouseEvents()" class="signatureLink">_activateNormalMouseEvents</a>(isFirstActivation:Boolean = false):void</div><div class="summaryTableDescription">
+		 Activates the mouse events necessary for panning and zooming
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_cancelNormalMouseEvents()" class="signatureLink">_cancelNormalMouseEvents</a>(exceptMouseWheel:Boolean = false):void</div><div class="summaryTableDescription">
+		 Removes the mouse events necessary for panning and zooming
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_contentPointInView()" class="signatureLink">_contentPointInView</a>(x:String, y:String):Boolean</div><div class="summaryTableDescription">
+		 Determines if a particular x,y coord of the content container is in view
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_cornerPointInView()" class="signatureLink">_cornerPointInView</a>(cornerName:String):Boolean</div><div class="summaryTableDescription">
+		 Determines if/which corner point(s) of the content container is in view
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_enforcePlacementRules()" class="signatureLink">_enforcePlacementRules</a>(event:Event = null):void</div><div class="summaryTableDescription">
+		 A centralized method for enforcing that the content container has not been "placed" invalidly, and if it has,
+		 then snap it back to the closest valid state.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onCreationComplete()" class="signatureLink">_onCreationComplete</a>(event:FlexEvent):void</div><div class="summaryTableDescription">
+		 Run when the component and all its initial children have been created
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onMouseDown()" class="signatureLink">_onMouseDown</a>(event:MouseEvent):void</div><div class="summaryTableDescription">
+		 Executed when the mouse is pressed down on the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onMouseDownMove()" class="signatureLink">_onMouseDownMove</a>(event:MouseEvent):void</div><div class="summaryTableDescription">
+		 Executed when the mouse is pressed down and is moving around the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onMouseOut()" class="signatureLink">_onMouseOut</a>(event:MouseEvent):void</div><div class="summaryTableDescription">
+		 Executed when the mouse is moved out of the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onMouseOver()" class="signatureLink">_onMouseOver</a>(event:MouseEvent):void</div><div class="summaryTableDescription">
+		 Executed when the mouse is over the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onMouseUp()" class="signatureLink">_onMouseUp</a>(event:Event):void</div><div class="summaryTableDescription">
+		 Executed when the mouse is depressed 
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onMouseWheel()" class="signatureLink">_onMouseWheel</a>(event:MouseEvent):void</div><div class="summaryTableDescription">
+		 Executed when a user uses the mouse wheel
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_onScrollBarScroll()" class="signatureLink">_onScrollBarScroll</a>(event:ScrollEvent):void</div><div class="summaryTableDescription">
+		 Run when a user is using the scrollbars.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_setCursorHandClosed()" class="signatureLink">_setCursorHandClosed</a>():void</div><div class="summaryTableDescription">
+		 Sets the Flex cursor to the closed hand
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_setCursorHandOpen()" class="signatureLink">_setCursorHandOpen</a>():void</div><div class="summaryTableDescription">
+		 Sets the Flex cursor to the open hand
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_updateScrollBars()" class="signatureLink">_updateScrollBars</a>():void</div><div class="summaryTableDescription">
+		 Used for updating the dimensions/positions of the scrollbars
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#_updateViewCenter()" class="signatureLink">_updateViewCenter</a>():void</div><div class="summaryTableDescription">
+		 Used for keeping track of the center point of the viewable area of the content container
+		 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#createChildren()" class="signatureLink">createChildren</a>():void</div><div class="summaryTableDescription">[override] 
+		 We want to do some things before the "children" of this container are added, i.e.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#updateDisplayList()" class="signatureLink">updateDisplayList</a>(unscaledWidth:Number, unscaledHeight:Number):void</div><div class="summaryTableDescription">[override] 
+		 Replaces the default updateDisplayList method, calls the original and performs tasks necessary to create
+		 pieces of this component in the correct position/layout, etc.</div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr></table></div><a name="eventSummary"></a><div class="summarySection"><div class="summaryTableTitle">Events</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableEvent"><tr><th>&nbsp;</th><th colspan="2">Event</th><th> Summary </th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:pan" class="signatureLink">pan</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the user is zooming panning or scrolling</td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:zoom" class="signatureLink">zoom</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the user is zooming in or out</td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr></table></div><a name="constantSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Constants</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableConstant"><tr><th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#BOTTOM_LEFT" class="signatureLink">BOTTOM_LEFT</a> : String = bottomLeft<div class="summaryTableDescription">[static] 
+		 Constant to identify a bottom left corner 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#BOTTOM_RIGHT" class="signatureLink">BOTTOM_RIGHT</a> : String = bottomRight<div class="summaryTableDescription">[static] 
+		 Constant to identify a bottom right corner 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#TOP_LEFT" class="signatureLink">TOP_LEFT</a> : String = topLeft<div class="summaryTableDescription">[static] 
+		 Constant to identify a top left corner 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#TOP_RIGHT" class="signatureLink">TOP_RIGHT</a> : String = topRight<div class="summaryTableDescription">[static] 
+		 Constant to identify a top right corner 
+		 </div></td><td class="summaryTableOwnerCol">PanZoomComponent</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="_bottomRightMask"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_bottomRightMask</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>protected var _bottomRightMask:UIComponent</code><p></p><p></p><p>
+		 A simple rectangular mask to be placed at the bottom-right most part of the component, for covering
+		 the area where the scrollbars meet
+		 </p></div><a name="propertyDetail"></a><a name="_contentHeight"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_contentHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _contentHeight:Number</code><p></p><p></p><p>
+		 The height of the container that can be panned/zoomed
+		 </p></div><a name="propertyDetail"></a><a name="_contentTopLeft"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_contentTopLeft</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _contentTopLeft:Point</code><p></p><p></p><p>
+		 Tracks where the top, left point of the <b>content</b> container is for panning/zooming purposes
+		 </p></div><a name="propertyDetail"></a><a name="_contentWidth"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_contentWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _contentWidth:Number</code><p></p><p></p><p>
+		 The width of the container that can be panned/zoomed
+		 </p></div><a name="propertyDetail"></a><a name="_created"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_created</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _created:Boolean = false</code><p></p><p></p><p>
+		 Tracks whether or not this entire component has been created.
+		 </p></div><a name="propertyDetail"></a><a name="_hScrollBar"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_hScrollBar</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _hScrollBar:HScrollBar</code><p></p><p></p><p>
+		 Our custom horizontal scroll bar, replacing the built-in Flex one
+		 </p></div><a name="propertyDetail"></a><a name="_initialized"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_initialized</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _initialized:Boolean = false</code><p></p><p></p><p>
+		 Tracks whether or not this has component has been initialized (necessary properties set and required 
+		 children created).
+		 </p></div><a name="propertyDetail"></a><a name="_mouseDownPosition"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_mouseDownPosition</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _mouseDownPosition:Point</code><p></p><p></p><p>
+		 Tracks a point where the mouse was clicked for panning/zooming purposes
+		 </p></div><a name="propertyDetail"></a><a name="_scale"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_scale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _scale:Number = 1</code><p></p><p></p><p>
+		 The initial zoom level
+		 </p></div><a name="propertyDetail"></a><a name="_scaleMax"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_scaleMax</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _scaleMax:Number = 5</code><p></p><p></p><p>
+		 The maximum zoom level allowed (where 1 is actual size, 100%)
+		 </p></div><a name="propertyDetail"></a><a name="_scaleMin"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_scaleMin</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _scaleMin:Number = 0.125</code><p></p><p></p><p>
+		 The minimum zoom level allowed (where 1 is actual size, 100%)
+		 </p></div><a name="propertyDetail"></a><a name="_viewCenter"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_viewCenter</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _viewCenter:Point</code><p></p><p></p><p>
+		 Tracks the current center point of the viewable window into the <b>content</b> container
+		 </p></div><a name="propertyDetail"></a><a name="_vScrollBar"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_vScrollBar</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>protected var _vScrollBar:VScrollBar</code><p></p><p></p><p>
+		 Our custom vertical scroll bar, replacing the built-in Flex one
+		 </p></div><a name="propertyDetail"></a><a name="childPreventsPan"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">childPreventsPan</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>childPreventsPan:Boolean</code><p></p><p></p><p>
+		 When true, while the mouse is over a child within the <b>content</b> container disables normal panning
+		 by drag and drop.
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get childPreventsPan():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set childPreventsPan(value:Boolean):void</code><br/></div><a name="propertyDetail"></a><a name="content"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">content</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public var content:Canvas</code><p></p><p></p><p>
+		 This is the container where all custom children are placed.  It represents
+		 the bounded area that can be panned and zoomed.
+		 </p></div><a name="propertyDetail"></a><a name="contentBackgroundAlpha"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentBackgroundAlpha</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentBackgroundAlpha:Number</code><p></p><p></p><p>
+		 Sets the background alpha of the <b>content</b> container, or pannable/zoomable area.
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentBackgroundAlpha():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentBackgroundAlpha(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="contentBackgroundColor"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentBackgroundColor</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentBackgroundColor:uint</code><p></p><p></p><p>
+		 Sets the background color of the <b>content</b> container, or pannable/zoomable area.
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentBackgroundColor():uint</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentBackgroundColor(value:uint):void</code><br/></div><a name="propertyDetail"></a><a name="contentBorderAlpha"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentBorderAlpha</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentBorderAlpha:Number</code><p></p><p></p><p>
+		 Sets the border alpha of the <b>content</b> container, or pannable/zoomable area.
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentBorderAlpha():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentBorderAlpha(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="contentBorderColor"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentBorderColor</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentBorderColor:uint</code><p></p><p></p><p>
+		 Sets the border color of the <b>content</b> container, or pannable/zoomable area.
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentBorderColor():uint</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentBorderColor(value:uint):void</code><br/></div><a name="propertyDetail"></a><a name="contentBorderThickness"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentBorderThickness</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentBorderThickness:Number</code><p></p><p></p><p>
+		 Sets the border thickness of the <b>content</b> container, or pannable/zoomable area.
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentBorderThickness():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentBorderThickness(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="contentHeight"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentHeight:Number</code><p></p><p></p><p>
+		 Gets the height of the <b>content</b> container
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentHeight():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentHeight(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="contentWidth"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">contentWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>contentWidth:Number</code><p></p><p></p><p>
+		 Gets the width of the <b>content</b> container
+		 
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contentWidth():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contentWidth(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="scale"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">scale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>scale:Number</code><p></p><p></p><p>
+		 Gets the current scale or zoom level
+		 
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scale():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scale(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="scaleMax"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">scaleMax</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>scaleMax:Number</code><p></p><p></p><p>
+		 Gets the maximum zoom level
+		 
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleMax():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleMax(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="scaleMin"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">scaleMin</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>scaleMin:Number</code><p></p><p></p><p>
+		 Gets the minimum zoom level
+		 
+		 </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleMin():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleMin(value:Number):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="PanZoomComponent()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">PanZoomComponent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function PanZoomComponent()</code><p></p><p>
+		 Constructor
+		 
+		 </p></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="_activateNormalMouseEvents()"></a><a name="_activateNormalMouseEvents(Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_activateNormalMouseEvents</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> protected function _activateNormalMouseEvents(isFirstActivation:Boolean = false):void</code><p></p><p></p><p>
+		 Activates the mouse events necessary for panning and zooming
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">isFirstActivation</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; tells whether we're activating these events for the first time or not
+		 
+		 </td></tr></table></p></div><a name="_cancelNormalMouseEvents()"></a><a name="_cancelNormalMouseEvents(Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_cancelNormalMouseEvents</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _cancelNormalMouseEvents(exceptMouseWheel:Boolean = false):void</code><p></p><p></p><p>
+		 Removes the mouse events necessary for panning and zooming
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">exceptMouseWheel</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; when true, then mouse wheel zooming event will remain active
+		 
+		 </td></tr></table></p></div><a name="_contentPointInView()"></a><a name="_contentPointInView(String,String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_contentPointInView</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _contentPointInView(x:String, y:String):Boolean</code><p></p><p></p><p>
+		 Determines if a particular x,y coord of the <b>content</b> container is in view
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">x</span>:String</code> &mdash; the x coordinate to check
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">y</span>:String</code> &mdash; the y coordinate to check
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="_cornerPointInView()"></a><a name="_cornerPointInView(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_cornerPointInView</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _cornerPointInView(cornerName:String):Boolean</code><p></p><p></p><p>
+		 Determines if/which corner point(s) of the <b>content</b> container is in view
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">cornerName</span>:String</code> &mdash; the contstant corner name representing one of four possible corners
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code></td></tr></table></div><a name="_enforcePlacementRules()"></a><a name="_enforcePlacementRules(flash.events.Event)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_enforcePlacementRules</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _enforcePlacementRules(event:Event = null):void</code><p></p><p></p><p>
+		 A centralized method for enforcing that the <b>content</b> container has not been "placed" invalidly, and if it has,
+		 then snap it back to the closest valid state.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; the relevant event that most recently placed the content
+		 
+		 </td></tr></table></p></div><a name="_onCreationComplete()"></a><a name="_onCreationComplete(mx.events.FlexEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onCreationComplete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onCreationComplete(event:FlexEvent):void</code><p></p><p></p><p>
+		 Run when the component and all its initial children have been created
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:FlexEvent</code> &mdash; the FlexEvent
+		 </td></tr></table></p></div><a name="_onMouseDown()"></a><a name="_onMouseDown(flash.events.MouseEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onMouseDown</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onMouseDown(event:MouseEvent):void</code><p></p><p></p><p>
+		 Executed when the mouse is pressed down on the <b>content</b> container
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; the MouseEvent
+		 
+		 </td></tr></table></p></div><a name="_onMouseDownMove()"></a><a name="_onMouseDownMove(flash.events.MouseEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onMouseDownMove</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onMouseDownMove(event:MouseEvent):void</code><p></p><p></p><p>
+		 Executed when the mouse is pressed down and is moving around the <b>content</b> container
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; the MouseEvent
+		 
+		 </td></tr></table></p></div><a name="_onMouseOut()"></a><a name="_onMouseOut(flash.events.MouseEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onMouseOut</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onMouseOut(event:MouseEvent):void</code><p></p><p></p><p>
+		 Executed when the mouse is moved out of the <b>content</b> container
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; the MouseEvent
+		 
+		 </td></tr></table></p></div><a name="_onMouseOver()"></a><a name="_onMouseOver(flash.events.MouseEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onMouseOver</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onMouseOver(event:MouseEvent):void</code><p></p><p></p><p>
+		 Executed when the mouse is over the <b>content</b> container
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; the MouseEvent
+		 
+		 </td></tr></table></p></div><a name="_onMouseUp()"></a><a name="_onMouseUp(flash.events.Event)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onMouseUp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onMouseUp(event:Event):void</code><p></p><p></p><p>
+		 Executed when the mouse is depressed 
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:Event</code> &mdash; the MouseEvent
+		 
+		 </td></tr></table></p></div><a name="_onMouseWheel()"></a><a name="_onMouseWheel(flash.events.MouseEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onMouseWheel</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onMouseWheel(event:MouseEvent):void</code><p></p><p></p><p>
+		 Executed when a user uses the mouse wheel
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; the MouseEvent
+		 
+		 </td></tr></table></p></div><a name="_onScrollBarScroll()"></a><a name="_onScrollBarScroll(mx.events.ScrollEvent)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_onScrollBarScroll</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _onScrollBarScroll(event:ScrollEvent):void</code><p></p><p></p><p>
+		 Run when a user is using the scrollbars.  This is a necessary function since we are bypassing
+		 built-in Flex scrollbar functionality
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">event</span>:ScrollEvent</code> &mdash; the ScrollEvent
+		 
+		 </td></tr></table></p></div><a name="_setCursorHandClosed()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_setCursorHandClosed</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _setCursorHandClosed():void</code><p></p><p></p><p>
+		 Sets the Flex cursor to the closed hand
+		 
+		 </p></div><a name="_setCursorHandOpen()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_setCursorHandOpen</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _setCursorHandOpen():void</code><p></p><p></p><p>
+		 Sets the Flex cursor to the open hand
+		 
+		 </p></div><a name="_updateScrollBars()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_updateScrollBars</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _updateScrollBars():void</code><p></p><p></p><p>
+		 Used for updating the dimensions/positions of the scrollbars
+		 
+		 </p></div><a name="_updateViewCenter()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">_updateViewCenter</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> protected function _updateViewCenter():void</code><p></p><p></p><p>
+		 Used for keeping track of the center point of the viewable area of the <b>content</b> container
+		 
+		 </p></div><a name="addChild()"></a><a name="addChild(flash.display.DisplayObject)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">addChild</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function addChild(child:DisplayObject):DisplayObject</code><p></p><p></p><p>
+		 Replaces the default addChild method for this component (only after initialization).  The user-placed
+		 children should actually go into the <b>content</b> instead of this component itself.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">child</span>:DisplayObject</code> &mdash; the added child
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>DisplayObject</code> &mdash; the added child
+		 
+		 </td></tr></table></div><a name="addChildAt()"></a><a name="addChildAt(flash.display.DisplayObject,int)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">addChildAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function addChildAt(child:DisplayObject, index:int):DisplayObject</code><p></p><p></p><p>
+		 Replaces the default addChildAt method for this component (only after initialization).  The user-placed
+		 children should actually go into the <b>content</b> instead of this component itself.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">child</span>:DisplayObject</code> &mdash; the added child
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">index</span>:int</code> &mdash; the position at which to add the child
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>DisplayObject</code> &mdash; the added child
+		 
+		 </td></tr></table></div><a name="createChildren()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">createChildren</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override protected function createChildren():void</code><p></p><p></p><p>
+		 We want to do some things before the "children" of this container are added, i.e.
+		 add the actual children, then add the initial "children" of this container to the content
+		 
+		 </p></div><a name="getChildAt()"></a><a name="getChildAt(int)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getChildAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function getChildAt(index:int):DisplayObject</code><p></p><p></p><p>
+		 Replaces the default getChildAt method for this component (only after creation).  The "children" of this
+		 component should actually come from the <b>content</b> container.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">index</span>:int</code> &mdash; the position of the child to get
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>DisplayObject</code> &mdash; the child
+		 
+		 </td></tr></table></div><a name="getChildByName()"></a><a name="getChildByName(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getChildByName</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function getChildByName(name:String):DisplayObject</code><p></p><p></p><p>
+		 Replaces the default getChildByName method for this component (only after creation).  The "children" of this
+		 component should actually come from the <b>content</b> container.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">name</span>:String</code> &mdash; the name of the child we want to get
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>DisplayObject</code> &mdash; the child
+		 
+		 </td></tr></table></div><a name="getChildIndex()"></a><a name="getChildIndex(flash.display.DisplayObject)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getChildIndex</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function getChildIndex(child:DisplayObject):int</code><p></p><p></p><p>
+		 Replaces the default getChildIndex method for this component (only after creation).  The "children" of this
+		 component should actually come from the <b>content</b> container.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">child</span>:DisplayObject</code> &mdash; the child whose index we want to get
+		 
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>int</code> &mdash; the integer index/position of the child
+		 
+		 </td></tr></table></div><a name="getChildren()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getChildren</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override public function getChildren():Array</code><p></p><p></p><p>
+		 Replaces the default getChildren method for this component (only after creation).  The "children" of this
+		 component should actually come from the <b>content</b> container.
+		 
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Array</code> &mdash; an array of children
+		 
+		 </td></tr></table></div><a name="updateDisplayList()"></a><a name="updateDisplayList(Number,Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">updateDisplayList</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void</code><p></p><p></p><p>
+		 Replaces the default updateDisplayList method, calls the original and performs tasks necessary to create
+		 pieces of this component in the correct position/layout, etc.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">unscaledWidth</span>:Number</code> &mdash; 	the unscaledWidth of this component
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">unscaledHeight</span>:Number</code> &mdash; the unscaledHeight of this component 
+		 
+		 </td></tr></table></p></div><a name="zoom()"></a><a name="zoom(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">zoom</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function zoom(toScale:Number):void</code><p></p><p></p><p>
+		 Executes a zoom to a particular level/scale
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">toScale</span>:Number</code> &mdash; the zoom destination scale
+		 
+		 </td></tr></table></p></div><a name="zoomDirectional()"></a><a name="zoomDirectional(int)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">zoomDirectional</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function zoomDirectional(directionalSpeed:int):void</code><p></p><p></p><p>
+		 Zooms in a particular directional speed relative to the current scale.  I.e. if we're zooming in quicker, we pass in a large number greater than
+		 1.  If we'd like to zoom out slowly, then it's a number just less than zero.
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">directionalSpeed</span>:int</code> &mdash; the vector-like value, designating a direction (positive or negative) and a magnitude (how large or small it is)
+		 
+		 </td></tr></table></p></div><div class="detailSectionHeader"> Event Detail </div><a name="event:pan"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">pan</td><td class="detailHeaderType"> Event </td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../../org/rockholla/events/PanZoomEvent.html"><code>org.rockholla.events.PanZoomEvent</code></a><br/><span class="label">PanZoomEvent.type property = </span><a href="../../../../org/rockholla/events/PanZoomEvent.html#PAN"><code>org.rockholla.events.PanZoomEvent.PAN</code></a><br/><p></p><p></p><p>
+	 Dispatched when the user is zooming panning or scrolling
+	 
+	 </p>
+		 Event relevant to panning
+		 </div><a name="event:zoom"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">zoom</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><a href="../../../../org/rockholla/events/PanZoomEvent.html"><code>org.rockholla.events.PanZoomEvent</code></a><br/><span class="label">PanZoomEvent.type property = </span><a href="../../../../org/rockholla/events/PanZoomEvent.html#ZOOM"><code>org.rockholla.events.PanZoomEvent.ZOOM</code></a><br/><p></p><p></p><p>
+	 Dispatched when the user is zooming in or out
+	 
+	 </p>
+		 Event relevant to zooming
+		 </div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="BOTTOM_LEFT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">BOTTOM_LEFT</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>public static const BOTTOM_LEFT:String = bottomLeft</code><p></p><p></p><p>
+		 Constant to identify a bottom left corner 
+		 </p></div><a name="constantDetail"></a><a name="BOTTOM_RIGHT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">BOTTOM_RIGHT</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const BOTTOM_RIGHT:String = bottomRight</code><p></p><p></p><p>
+		 Constant to identify a bottom right corner 
+		 </p></div><a name="constantDetail"></a><a name="TOP_LEFT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">TOP_LEFT</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const TOP_LEFT:String = topLeft</code><p></p><p></p><p>
+		 Constant to identify a top left corner 
+		 </p></div><a name="constantDetail"></a><a name="TOP_RIGHT"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">TOP_RIGHT</td><td class="detailHeaderType">Constant</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public static const TOP_RIGHT:String = topRight</code><p></p><p></p><p>
+		 Constant to identify a top right corner 
+		 </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Tue Jan 25 2011, 05:53 PM -05:00  </center></div></body></html><!--<br/>Tue Jan 25 2011, 05:53 PM -05:00  -->

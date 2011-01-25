@@ -35,57 +35,149 @@ package org.rockholla.controls.panzoom
 	
 	import org.rockholla.events.PanZoomEvent;
 	
+	/**
+	 * Dispatched when the user is zooming in or out
+	 * 
+	 * @eventType org.rockholla.events.PanZoomEvent.ZOOM
+	 */
 	[Event(name="zoom", type="org.rockholla.events.PanZoomEvent")]
+	/**
+	 * Dispatched when the user is zooming panning or scrolling
+	 * 
+	 * @eventType org.rockholla.events.PanZoomEvent.PAN
+	 */
 	[Event(name="pan", type="org.rockholla.events.PanZoomEvent")]
 	
 	/**
 	 * The PanZoomComponent is a Flex 3 and 4 compatible control, capable of receiving standard flex components,
-	 * placing them within the component's pannable and zoomable container.
+	 * placing them within a container that can be panned and zoomed via dragging, dropping, and mouse wheel operation.
 	 * 
 	 * @langversion 3.0
 	 */
 	public class PanZoomComponent extends Canvas 
 	{
 		
+		/**
+		 * Constant to identify a top left corner 
+		 */
 		public static const TOP_LEFT:String = "topLeft";
+		/**
+		 * Constant to identify a top right corner 
+		 */
 		public static const TOP_RIGHT:String = "topRight";
+		/**
+		 * Constant to identify a bottom left corner 
+		 */
 		public static const BOTTOM_LEFT:String = "bottomLeft";
+		/**
+		 * Constant to identify a bottom right corner 
+		 */
 		public static const BOTTOM_RIGHT:String = "bottomRight";
 		
+		/**
+		 * Tracks whether or not this has component has been initialized (necessary properties set and required 
+		 * children created).
+		 */
 		protected var _initialized:Boolean = false;
+		/**
+		 * Tracks whether or not this entire component has been created.
+		 */
 		protected var _created:Boolean = false;
 		
+		/**
+		 * This is the container where all custom children are placed.  It represents
+		 * the bounded area that can be panned and zoomed.
+		 */
 		public var content:Canvas = new Canvas();
 		
+		/**
+		 * Sets the border color of the <b>content</b> container, or pannable/zoomable area.
+		 */
 		[Bindable]
 		public var contentBorderColor:uint = 0xFFFFFF;
+		/**
+		 * Sets the border alpha of the <b>content</b> container, or pannable/zoomable area.
+		 */
 		[Bindable]
 		public var contentBorderAlpha:Number = 1;
+		/**
+		 * Sets the border thickness of the <b>content</b> container, or pannable/zoomable area.
+		 */
 		[Bindable]
 		public var contentBorderThickness:Number = 1;
+		/**
+		 * Sets the background color of the <b>content</b> container, or pannable/zoomable area.
+		 */
 		[Bindable]
 		public var contentBackgroundColor:uint = 0xFFFFFF;
+		/**
+		 * Sets the background alpha of the <b>content</b> container, or pannable/zoomable area.
+		 */
 		[Bindable]
 		public var contentBackgroundAlpha:Number = 1;
+		/**
+		 * When true, while the mouse is over a child within the <b>content</b> container disables normal panning
+		 * by drag and drop.
+		 */
 		[Bindable]
 		public var childPreventsPan:Boolean = true;
 		
+		/**
+		 * The width of the container that can be panned/zoomed
+		 */
 		protected var _contentWidth:Number;
+		/**
+		 * The height of the container that can be panned/zoomed
+		 */
 		protected var _contentHeight:Number;
 		
+		/**
+		 * The minimum zoom level allowed (where 1 is actual size, 100%)
+		 */
 		protected var _scaleMin:Number = 0.125;
+		/**
+		 * The maximum zoom level allowed (where 1 is actual size, 100%)
+		 */
 		protected var _scaleMax:Number = 5;
+		/**
+		 * The initial zoom level
+		 */
 		protected var _scale:Number = 1;
 		
+		/**
+		 * Our custom vertical scroll bar, replacing the built-in Flex one
+		 */
 		protected var _vScrollBar:VScrollBar = new VScrollBar();
+		/**
+		 * Our custom horizontal scroll bar, replacing the built-in Flex one
+		 */
 		protected var _hScrollBar:HScrollBar = new HScrollBar();
+		/**
+		 * Tracks where the top, left point of the <b>content</b> container is for panning/zooming purposes
+		 */
 		protected var _contentTopLeft:Point = new Point(0,0);
+		/**
+		 * Tracks a point where the mouse was clicked for panning/zooming purposes
+		 */
 		protected var _mouseDownPosition:Point = new Point(0,0);
+		/**
+		 * Tracks the current center point of the viewable window into the <b>content</b> container
+		 */
 		protected var _viewCenter:Point = new Point(0,0);
+		/**
+		 * A simple rectangular mask to be placed at the bottom-right most part of the component, for covering
+		 * the area where the scrollbars meet
+		 */
 		protected var _bottomRightMask:UIComponent = new UIComponent();
 		
+		/**
+		 * The default container icon, an open hand
+		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandOpen")] 
-		private var _iconHandOpen:Class;		
+		private var _iconHandOpen:Class;
+		/**
+		 * The closed icon hand, used when dragging the <b>content</b> container around
+		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandClosed")] 
 		private var _iconHandClosed:Class;
 		
@@ -184,6 +276,15 @@ package org.rockholla.controls.panzoom
 
 		}
 		
+		/**
+		 * Replaces the default addChild method for this component (only after initialization).  The user-placed
+		 * children should actually go into the <b>content</b> instead of this component itself.
+		 * 
+		 * @param child	the added child
+		 * 
+		 * @return the added child
+		 * 
+		 */ 
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			
@@ -198,6 +299,16 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Replaces the default addChildAt method for this component (only after initialization).  The user-placed
+		 * children should actually go into the <b>content</b> instead of this component itself.
+		 * 
+		 * @param child	the added child
+		 * @param index	the position at which to add the child
+		 * 
+		 * @return the added child
+		 * 
+		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
 			
@@ -212,6 +323,13 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Replaces the default getChildren method for this component (only after creation).  The "children" of this
+		 * component should actually come from the <b>content</b> container.
+		 * 
+		 * @return an array of children
+		 * 
+		 */
 		override public function getChildren():Array
 		{
 			if(this._created)
@@ -224,6 +342,15 @@ package org.rockholla.controls.panzoom
 			}
 		}
 		
+		/**
+		 * Replaces the default getChildAt method for this component (only after creation).  The "children" of this
+		 * component should actually come from the <b>content</b> container.
+		 * 
+		 * @param index	the position of the child to get
+		 * 
+		 * @return the child
+		 * 
+		 */
 		override public function getChildAt(index:int):DisplayObject
 		{
 			if(this._created)
@@ -236,6 +363,15 @@ package org.rockholla.controls.panzoom
 			}
 		}
 		
+		/**
+		 * Replaces the default getChildIndex method for this component (only after creation).  The "children" of this
+		 * component should actually come from the <b>content</b> container.
+		 * 
+		 * @param child	the child whose index we want to get
+		 * 
+		 * @return the integer index/position of the child
+		 * 
+		 */
 		override public function getChildIndex(child:DisplayObject):int
 		{
 			if(this._created)
@@ -248,6 +384,15 @@ package org.rockholla.controls.panzoom
 			}
 		}
 		
+		/**
+		 * Replaces the default getChildByName method for this component (only after creation).  The "children" of this
+		 * component should actually come from the <b>content</b> container.
+		 * 
+		 * @param name	the name of the child we want to get
+		 * 
+		 * @return the child
+		 * 
+		 */
 		override public function getChildByName(name:String):DisplayObject
 		{
 			if(this._created)
@@ -260,6 +405,14 @@ package org.rockholla.controls.panzoom
 			}
 		}
 		
+		/**
+		 * Replaces the default updateDisplayList method, calls the original and performs tasks necessary to create
+		 * pieces of this component in the correct position/layout, etc.
+		 * 
+		 * @param unscaledWidth		the unscaledWidth of this component
+		 * @param unscaledHeight	the unscaledHeight of this component 
+		 * 
+		 */
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
 			
@@ -269,6 +422,10 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Used for updating the dimensions/positions of the scrollbars
+		 * 
+		 */
 		protected function _updateScrollBars():void 
 		{
 			
@@ -302,6 +459,10 @@ package org.rockholla.controls.panzoom
 			this._vScrollBar.lineScrollSize = this._vScrollBar.maxScrollPosition/30;
 		}
 		
+		/**
+		 * Used for keeping track of the center point of the viewable area of the <b>content</b> container
+		 * 
+		 */
 		protected function _updateViewCenter():void 
 		{
 			
@@ -325,51 +486,117 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Sets the width of the <b>content</b> container
+		 * 
+		 * @param value	the width
+		 * 
+		 */
 		public function set contentWidth(value:Number):void 
 		{
 			this._contentWidth = value;
 		}
+		/**
+		 * Gets the width of the <b>content</b> container
+		 * 
+		 * @return the width
+		 * 
+		 */
 		public function get contentWidth():Number
 		{
 			return this._contentWidth;
 		}
+		/**
+		 * Sets the height of the <b>content</b> container
+		 * 
+		 * @param value	the height
+		 * 
+		 */
 		public function set contentHeight(value:Number):void 
 		{
 			this._contentHeight = value;
 		}
+		/**
+		 * Gets the height of the <b>content</b> container
+		 * 
+		 * @return the height
+		 * 
+		 */
 		public function get contentHeight():Number
 		{
 			return this._contentHeight;
 		}
+		/**
+		 * Sets the minimum zoom level
+		 * 
+		 * @param value	the minimum level
+		 * 
+		 */
 		public function set scaleMin(value:Number):void 
 		{
 			this._scaleMin = value;
 		}
 		
+		/**
+		 * Gets the minimum zoom level
+		 * 
+		 * @return the minimum level
+		 * 
+		 */
 		[Bindable]
 		public function get scaleMin():Number 
 		{ 
 			return this._scaleMin; 
 		}
+		/**
+		 * Gets the maximum zoom level
+		 * 
+		 * @return the maximum level
+		 * 
+		 */
 		[Bindable]
 		public function get scaleMax():Number 
 		{ 
 			return this._scaleMax; 
 		}
+		/**
+		 * Sets the maximum zoom level
+		 * 
+		 * @param the maximum level
+		 * 
+		 */
 		public function set scaleMax(value:Number):void 
 		{ 
 			this._scaleMax = value; 
 		}
+		/**
+		 * Sets the scale or zoom level of the content
+		 * 
+		 * @param value the scale, zoom level to set
+		 * 
+		 */
 		public function set scale(value:Number):void 
 		{ 
 			this._scale = value;
 		}
+		/**
+		 * Gets the current scale or zoom level
+		 * 
+		 * @return the scale, zoom level
+		 * 
+		 */
 		[Bindable]
 		public function get scale():Number 
 		{ 
 			return this._scale; 
 		}
 		
+		/**
+		 * Activates the mouse events necessary for panning and zooming
+		 * 
+		 * @param isFirstActivation	tells whether we're activating these events for the first time or not
+		 * 
+		 */
 		protected function _activateNormalMouseEvents(isFirstActivation:Boolean = false):void 
 		{
 			
@@ -382,6 +609,12 @@ package org.rockholla.controls.panzoom
 			this.content.addEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheel);
 			
 		}
+		/**
+		 * Removes the mouse events necessary for panning and zooming
+		 * 
+		 * @param exceptMouseWheel	when true, then mouse wheel zooming event will remain active
+		 * 
+		 */
 		protected function _cancelNormalMouseEvents(exceptMouseWheel:Boolean = false):void 
 		{
 			
@@ -394,6 +627,12 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Executed when the mouse is over the <b>content</b> container
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */
 		protected function _onMouseOver(event:MouseEvent):void 
 		{ 
 			if((this.childPreventsPan == true && event.target == this.content) || this.childPreventsPan == false)
@@ -408,6 +647,12 @@ package org.rockholla.controls.panzoom
 			} 
 		}
 		
+		/**
+		 * Executed when the mouse is pressed down on the <b>content</b> container
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */
 		protected function _onMouseDown(event:MouseEvent):void 
 		{
 
@@ -420,6 +665,12 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Executed when the mouse is pressed down and is moving around the <b>content</b> container
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */
 		protected function _onMouseDownMove(event:MouseEvent):void 
 		{
 			
@@ -429,6 +680,12 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Executed when the mouse is depressed 
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */
 		protected function _onMouseUp(event:Event):void 
 		{
 			
@@ -444,11 +701,24 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Executed when the mouse is moved out of the <b>content</b> container
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */ 
 		protected function _onMouseOut(event:MouseEvent):void 
 		{ 
 			CursorManager.removeAllCursors();	
 		}
 		
+		/**
+		 * A centralized method for enforcing that the <b>content</b> container has not been "placed" invalidly, and if it has,
+		 * then snap it back to the closest valid state.
+		 * 
+		 * @param event	the relevant event that most recently placed the content
+		 * 
+		 */
 		protected function _enforcePlacementRules(event:Event = null):void 
 		{
 			
@@ -507,6 +777,10 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Sets the Flex cursor to the open hand
+		 * 
+		 */
 		protected function _setCursorHandOpen():void 
 		{
 			
@@ -518,6 +792,10 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Sets the Flex cursor to the closed hand
+		 * 
+		 */
 		protected function _setCursorHandClosed():void 
 		{
 			
@@ -529,6 +807,12 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Executes a zoom to a particular level/scale
+		 * 
+		 * @param toScale	the zoom destination scale
+		 * 
+		 */
 		public function zoom(toScale:Number):void 
 		{
 			
@@ -548,25 +832,35 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Zooms in a particular directional speed relative to the current scale.  I.e. if we're zooming in quicker, we pass in a large number greater than
+		 * 1.  If we'd like to zoom out slowly, then it's a number just less than zero.
+		 * 
+		 * @param directionalSpeed	the vector-like value, designating a direction (positive or negative) and a magnitude (how large or small it is)
+		 * 
+		 */
 		public function zoomDirectional(directionalSpeed:int):void 
 		{
-			
-			if(directionalSpeed > 0) 
-			{
-				this.zoom(this.scale + (.04 * directionalSpeed));
-			} 
-			else if(directionalSpeed < 0) 
-			{
-				this.zoom(this.scale + (.04 * directionalSpeed));
-			}
-				
+			this.zoom(this.scale + (.04 * directionalSpeed));
 		}
 		
+		/**
+		 * Executed when a user uses the mouse wheel
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */
 		protected function _onMouseWheel(event:MouseEvent):void 
 		{ 
 			this.zoomDirectional(event.delta); 
 		}
 		
+		/**
+		 * Determines if/which corner point(s) of the <b>content</b> container is in view
+		 * 
+		 * @param cornerName	the contstant corner name representing one of four possible corners
+		 * 
+		 */
 		protected function _cornerPointInView(cornerName:String):Boolean 
 		{
 			
@@ -592,6 +886,13 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Determines if a particular x,y coord of the <b>content</b> container is in view
+		 * 
+		 * @param x	the x coordinate to check
+		 * @param y the y coordinate to check
+		 * 
+		 */
 		protected function _contentPointInView(x:String, y:String):Boolean 
 		{
 				
