@@ -91,32 +91,32 @@ package org.rockholla.controls.panzoom
 		public var content:Canvas = new Canvas();
 		
 		/**
-		 * Sets the border color of the <b>content</b> container, or pannable/zoomable area.
+		 * Sets the border color of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBorderColor:uint = 0xFFFFFF;
 		/**
-		 * Sets the border alpha of the <b>content</b> container, or pannable/zoomable area.
+		 * Sets the border alpha of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBorderAlpha:Number = 1;
 		/**
-		 * Sets the border thickness of the <b>content</b> container, or pannable/zoomable area.
+		 * Sets the border thickness of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBorderThickness:Number = 1;
 		/**
-		 * Sets the background color of the <b>content</b> container, or pannable/zoomable area.
+		 * Sets the background color of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBackgroundColor:uint = 0xFFFFFF;
 		/**
-		 * Sets the background alpha of the <b>content</b> container, or pannable/zoomable area.
+		 * Sets the background alpha of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBackgroundAlpha:Number = 1;
 		/**
-		 * When true, while the mouse is over a child within the <b>content</b> container disables normal panning
+		 * When true, while the mouse is over a child within the <strong>content</strong> container disables normal panning
 		 * by drag and drop.
 		 */
 		[Bindable]
@@ -153,7 +153,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected var _hScrollBar:HScrollBar = new HScrollBar();
 		/**
-		 * Tracks where the top, left point of the <b>content</b> container is for panning/zooming purposes
+		 * Tracks where the top, left point of the <strong>content</strong> container is for panning/zooming purposes
 		 */
 		protected var _contentTopLeft:Point = new Point(0,0);
 		/**
@@ -161,7 +161,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected var _mouseDownPosition:Point = new Point(0,0);
 		/**
-		 * Tracks the current center point of the viewable window into the <b>content</b> container
+		 * Tracks the current center point of the viewable window into the <strong>content</strong> container
 		 */
 		protected var _viewCenter:Point = new Point(0,0);
 		/**
@@ -176,7 +176,7 @@ package org.rockholla.controls.panzoom
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandOpen")] 
 		private var _iconHandOpen:Class;
 		/**
-		 * The closed icon hand, used when dragging the <b>content</b> container around
+		 * The closed icon hand, used when dragging the <strong>content</strong> container around
 		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandClosed")] 
 		private var _iconHandClosed:Class;
@@ -278,7 +278,7 @@ package org.rockholla.controls.panzoom
 		
 		/**
 		 * Replaces the default addChild method for this component (only after initialization).  The user-placed
-		 * children should actually go into the <b>content</b> instead of this component itself.
+		 * children should actually go into the <strong>content</strong> instead of this component itself.
 		 * 
 		 * @param child	the added child
 		 * 
@@ -301,7 +301,7 @@ package org.rockholla.controls.panzoom
 		
 		/**
 		 * Replaces the default addChildAt method for this component (only after initialization).  The user-placed
-		 * children should actually go into the <b>content</b> instead of this component itself.
+		 * children should actually go into the <strong>content</strong> instead of this component itself.
 		 * 
 		 * @param child	the added child
 		 * @param index	the position at which to add the child
@@ -325,7 +325,7 @@ package org.rockholla.controls.panzoom
 		
 		/**
 		 * Replaces the default getChildren method for this component (only after creation).  The "children" of this
-		 * component should actually come from the <b>content</b> container.
+		 * component should actually come from the <strong>content</strong> container.
 		 * 
 		 * @return an array of children
 		 * 
@@ -344,7 +344,7 @@ package org.rockholla.controls.panzoom
 		
 		/**
 		 * Replaces the default getChildAt method for this component (only after creation).  The "children" of this
-		 * component should actually come from the <b>content</b> container.
+		 * component should actually come from the <strong>content</strong> container.
 		 * 
 		 * @param index	the position of the child to get
 		 * 
@@ -365,7 +365,7 @@ package org.rockholla.controls.panzoom
 		
 		/**
 		 * Replaces the default getChildIndex method for this component (only after creation).  The "children" of this
-		 * component should actually come from the <b>content</b> container.
+		 * component should actually come from the <strong>content</strong> container.
 		 * 
 		 * @param child	the child whose index we want to get
 		 * 
@@ -386,7 +386,7 @@ package org.rockholla.controls.panzoom
 		
 		/**
 		 * Replaces the default getChildByName method for this component (only after creation).  The "children" of this
-		 * component should actually come from the <b>content</b> container.
+		 * component should actually come from the <strong>content</strong> container.
 		 * 
 		 * @param name	the name of the child we want to get
 		 * 
@@ -460,7 +460,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Used for keeping track of the center point of the viewable area of the <b>content</b> container
+		 * Used for keeping track of the center point of the viewable area of the <strong>content</strong> container
 		 * 
 		 */
 		protected function _updateViewCenter():void 
@@ -487,7 +487,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Sets the width of the <b>content</b> container
+		 * Sets the width of the <strong>content</strong> container
 		 * 
 		 * @param value	the width
 		 * 
@@ -497,7 +497,7 @@ package org.rockholla.controls.panzoom
 			this._contentWidth = value;
 		}
 		/**
-		 * Gets the width of the <b>content</b> container
+		 * Gets the width of the <strong>content</strong> container
 		 * 
 		 * @return the width
 		 * 
@@ -507,7 +507,7 @@ package org.rockholla.controls.panzoom
 			return this._contentWidth;
 		}
 		/**
-		 * Sets the height of the <b>content</b> container
+		 * Sets the height of the <strong>content</strong> container
 		 * 
 		 * @param value	the height
 		 * 
@@ -517,7 +517,7 @@ package org.rockholla.controls.panzoom
 			this._contentHeight = value;
 		}
 		/**
-		 * Gets the height of the <b>content</b> container
+		 * Gets the height of the <strong>content</strong> container
 		 * 
 		 * @return the height
 		 * 
@@ -628,7 +628,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Executed when the mouse is over the <b>content</b> container
+		 * Executed when the mouse is over the <strong>content</strong> container
 		 * 
 		 * @param event	the MouseEvent
 		 * 
@@ -648,7 +648,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Executed when the mouse is pressed down on the <b>content</b> container
+		 * Executed when the mouse is pressed down on the <strong>content</strong> container
 		 * 
 		 * @param event	the MouseEvent
 		 * 
@@ -666,7 +666,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Executed when the mouse is pressed down and is moving around the <b>content</b> container
+		 * Executed when the mouse is pressed down and is moving around the <strong>content</strong> container
 		 * 
 		 * @param event	the MouseEvent
 		 * 
@@ -702,7 +702,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Executed when the mouse is moved out of the <b>content</b> container
+		 * Executed when the mouse is moved out of the <strong>content</strong> container
 		 * 
 		 * @param event	the MouseEvent
 		 * 
@@ -713,7 +713,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * A centralized method for enforcing that the <b>content</b> container has not been "placed" invalidly, and if it has,
+		 * A centralized method for enforcing that the <strong>content</strong> container has not been "placed" invalidly, and if it has,
 		 * then snap it back to the closest valid state.
 		 * 
 		 * @param event	the relevant event that most recently placed the content
@@ -856,7 +856,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Determines if/which corner point(s) of the <b>content</b> container is in view
+		 * Determines if/which corner point(s) of the <strong>content</strong> container is in view
 		 * 
 		 * @param cornerName	the contstant corner name representing one of four possible corners
 		 * 
@@ -887,7 +887,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Determines if a particular x,y coord of the <b>content</b> container is in view
+		 * Determines if a particular x,y coord of the <strong>content</strong> container is in view
 		 * 
 		 * @param x	the x coordinate to check
 		 * @param y the y coordinate to check
