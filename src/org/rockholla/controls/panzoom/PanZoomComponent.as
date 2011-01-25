@@ -1,5 +1,4 @@
-/**
- * 
+/*
  *	This is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -15,8 +14,7 @@
  *	 
  */
 package org.rockholla.controls.panzoom 
-{
-	
+{	
 	import com.adobe.utils.mousewheel.MouseWheelEnabler;
 	import com.greensock.TweenLite;
 	
@@ -39,9 +37,16 @@ package org.rockholla.controls.panzoom
 	
 	[Event(name="zoom", type="org.rockholla.events.PanZoomEvent")]
 	[Event(name="pan", type="org.rockholla.events.PanZoomEvent")]
+	
+	/**
+	 * The PanZoomComponent is a Flex 3 and 4 compatible control, capable of receiving standard flex components,
+	 * placing them within the component's pannable and zoomable container.
+	 * 
+	 * @langversion 3.0
+	 */
 	public class PanZoomComponent extends Canvas 
 	{
-			
+		
 		public static const TOP_LEFT:String = "topLeft";
 		public static const TOP_RIGHT:String = "topRight";
 		public static const BOTTOM_LEFT:String = "bottomLeft";
@@ -84,6 +89,10 @@ package org.rockholla.controls.panzoom
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandClosed")] 
 		private var _iconHandClosed:Class;
 		
+		/**
+		 * Constructor
+		 * 
+		 */
 		public function PanZoomComponent() 
 		{
 			super();
@@ -92,6 +101,11 @@ package org.rockholla.controls.panzoom
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, this._onCreationComplete);
 		}
 		
+		/**
+		 * Run when the component and all its initial children have been created
+		 * 
+		 * @param event	the FlexEvent
+		 */
 		protected function _onCreationComplete(event:FlexEvent):void 
 		{
 			
@@ -114,6 +128,13 @@ package org.rockholla.controls.panzoom
 		
 		}
 		
+		/**
+		 * Run when a user is using the scrollbars.  This is a necessary function since we are bypassing
+		 * built-in Flex scrollbar functionality
+		 * 
+		 * @param event	the ScrollEvent
+		 * 
+		 */
 		protected function _onScrollBarScroll(event:ScrollEvent):void 
 		{
 			
@@ -133,6 +154,11 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * We want to do some things before the "children" of this container are added, i.e.
+		 * add the actual children, then add the initial "children" of this container to the content
+		 * 
+		 */
 		override protected function createChildren():void 
 		{
 			
