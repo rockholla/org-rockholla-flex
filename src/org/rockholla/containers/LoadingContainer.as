@@ -21,38 +21,86 @@ package org.rockholla.containers
 	
 	import spark.components.SkinnableContainer;
 	
+	/**
+	 * The LoadingContainer provides a mask to turn on and off to grant the container the ability of two states
+	 * <ul>
+	 * 		<li>Loading information, and therfore disabled</li>
+	 * 		<li>Idle, and therefore enabled</li>
+	 * </ul>
+	 * 
+	 * @langversion 3.0
+	 */
 	public class LoadingContainer extends SkinnableContainer
 	{
+		/**
+		 * The embedded "loading" animation icon
+		 */
 		[Embed(source="../assets/swf/loading-indicator.swf")]
 		private var loadingAnimation:Class;
 
+		/**
+		 * The container for the mask and loading image
+		 */
 		protected var _uiContainer:UIComponent;
+		/**
+		 * The actual component to display the loading animation
+		 */
 		protected var _loadImage:Image;
+		/**
+		 * The container for the mask
+		 */
 		protected var _fade:UIComponent;
+		/**
+		 * Designates whether in load or idle state
+		 */
 		protected var _isLoading:Boolean;
 		
+		/**
+		 * Constructore
+		 */
 		public function LoadingContainer()
 		{
 			super();
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, _onCreationComplete);
 		}
 		
+		/**
+		 * Executed when the component is done being created
+		 * 
+		 */
 		protected function _onCreationComplete(event:FlexEvent):void
 		{
 			
 		}
 		
+		/**
+		 * Public access to set the state of the container
+		 * 
+		 * @param isLoading	if true, the mask and loading icon are displayed, and the container contents are "disabled"
+		 * 
+		 */
 		[Bindable]
 		public function set isLoading(isLoading:Boolean):void
 		{
 			this._isLoading = isLoading;
 			this.invalidateDisplayList();
 		}
+		/**
+		 * Determines the current state of the container, whether it's in loading state or not
+		 * 
+		 * @return true or false
+		 * 
+		 */
 		public function get isLoading():Boolean
 		{
 			return this._isLoading;
 		}
 		
+		/**
+		 * Overrides the parent children creation by adding the necessary mask and icon elements
+		 * as children to this container
+		 * 
+		 */
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -66,6 +114,14 @@ package org.rockholla.containers
 			this.addElement(this._uiContainer);
 		}
 		
+		/**
+		 * Will update the layout/display of the container based on whether or not its state is
+		 * currently loading or not
+		 * 
+		 * @param unscaledWidth		the unscaledWidth of this component
+		 * @param unscaledHeight	the unscaledHeight of this component 
+		 * 
+		 */
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
