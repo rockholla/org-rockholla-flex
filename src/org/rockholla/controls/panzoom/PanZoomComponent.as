@@ -204,7 +204,7 @@ package org.rockholla.controls.panzoom
 			this.content.width = this._contentWidth;
 			this.content.height = this._contentHeight;
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, function(event:Event):void { MouseWheelEnabler.init(stage); });
+			this.addEventListener(Event.ADDED_TO_STAGE, this._onAddedToStage);
 			this.content.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver);
 			this._activateNormalMouseEvents(true);
 			
@@ -215,9 +215,23 @@ package org.rockholla.controls.panzoom
 			this.addEventListener(ResizeEvent.RESIZE, _enforcePlacementRules);
 			
 			this.zoom(1);
+		
+		}
+		
+		protected function _onAddedToStage(event:Event):void
+		{
+			
+			MouseWheelEnabler.init(stage);
+			this.addEventListener(FlexEvent.UPDATE_COMPLETE, this._onCreationUpdateComplete);
+			
+		}
+		
+		protected function _onCreationUpdateComplete(event:FlexEvent):void
+		{
 			
 			this._created = true;
-		
+			this.removeEventListener(FlexEvent.UPDATE_COMPLETE, this._onCreationUpdateComplete);
+			
 		}
 		
 		/**
@@ -355,6 +369,7 @@ package org.rockholla.controls.panzoom
 		{
 			if(this._created)
 			{
+				if(this.content.numChildren <= index) return super.getChildAt(index);
 				return this.content.getChildAt(index);	
 			}
 			else
@@ -416,7 +431,10 @@ package org.rockholla.controls.panzoom
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
 			
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			if(this._created == false)
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);	
+			}
 			
 			this._updateScrollBars();
 			
