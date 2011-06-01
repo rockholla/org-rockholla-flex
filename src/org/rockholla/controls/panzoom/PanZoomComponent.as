@@ -215,7 +215,7 @@ package org.rockholla.controls.panzoom
 			this.addEventListener(ResizeEvent.RESIZE, _enforcePlacementRules);
 			
 			this.zoom(1);
-		
+			
 		}
 		
 		protected function _onAddedToStage(event:Event):void
@@ -287,7 +287,7 @@ package org.rockholla.controls.panzoom
 			this._initialized = true;
 			
 			super.createChildren();
-
+			
 		}
 		
 		/**
@@ -673,7 +673,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onMouseDown(event:MouseEvent):void 
 		{
-
+			
 			this._setCursorHandClosed();
 			this._mouseDownPosition.x = this.parent.mouseX;
 			this._mouseDownPosition.y = this.parent.mouseY;
@@ -840,11 +840,11 @@ package org.rockholla.controls.panzoom
 				
 				this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - this._vScrollBar.width)/2)/this.scale)) * this.scale;
 				this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - this._hScrollBar.height)/2)/this.scale)) * this.scale;
-
+				
 				this._enforcePlacementRules();
 				
 				TweenLite.to(this.content, 0.2, { scaleX: this.scale, scaleY: this.scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
-			
+				
 				this.dispatchEvent(new PanZoomEvent(PanZoomEvent.ZOOM));
 			}
 			
@@ -913,7 +913,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _contentPointInView(x:String, y:String):Boolean 
 		{
-				
+			
 			// this function should be run after calculations and BEFORE physical updating
 			// we have top left
 			// if (content top x + (x * scale)) is less than or equal to this.width then x is in view
@@ -928,7 +928,7 @@ package org.rockholla.controls.panzoom
 			return false;
 			
 		}
-						
+		
 	}
 	
 }
