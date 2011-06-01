@@ -747,6 +747,12 @@ package org.rockholla.controls.panzoom
 			CursorManager.removeAllCursors();	
 		}
 		
+		/**
+		 * Executed on double click in the content (if doubleClickZoomStep is greater than 0)
+		 * 
+		 * @param event	the MouseEvent
+		 * 
+		 */
 		protected function _onDoubleClick(event:MouseEvent):void
 		{
 			this.zoomToPoint(new Point(this.content.mouseX, this.content.mouseY), this.scale + this.doubleClickZoomStep, false);
@@ -841,6 +847,14 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Zooms center to a particular point in the content
+		 * 
+		 * @param point			the x,y point zoom center destination
+		 * @param toScale		the new zoom scale
+		 * @param validateWarn	if true, then trace warns of out-of-bounds scale value (default = true)
+		 * 
+		 */
 		public function zoomToPoint(point:Point, toScale:Number, validateWarn:Boolean = true):void
 		{
 			
@@ -962,6 +976,13 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Performs validation on a proposed scale value, and warns if necessary
+		 * 
+		 * @param scale			the proposed scale value
+		 * @param validateWarn	if true, then a warning is traced
+		 * 
+		 */
 		protected function _validateScale(scale:Number, validateWarn:Boolean):Boolean
 		{
 			if(scale >= this.scaleMin && scale <= this.scaleMax) 
