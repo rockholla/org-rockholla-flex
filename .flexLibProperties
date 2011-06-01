@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" version="3">
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="com.patrickforce.preloaders.PreloaderDisplayBase"/>
     <classEntry path="com.patrickforce.effects.RotationInstance"/>
@@ -23,6 +23,8 @@
     <classEntry path="org.rockholla.controls.CachedImage"/>
     <classEntry path="org.rockholla.controls.ImageCache"/>
     <classEntry path="org.rockholla.events.PanZoomEvent"/>
+    <classEntry path="org.rockholla.controls.panzoom.PanZoomComponentError"/>
+    <classEntry path="org.rockholla.controls.panzoom.PanZoomContent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

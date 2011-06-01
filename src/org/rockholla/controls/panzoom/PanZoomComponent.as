@@ -22,6 +22,7 @@ package org.rockholla.controls.panzoom
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import mx.containers.Canvas;
 	import mx.controls.HScrollBar;
@@ -88,7 +89,7 @@ package org.rockholla.controls.panzoom
 		 * This is the container where all custom children are placed.  It represents
 		 * the bounded area that can be panned and zoomed.
 		 */
-		public var content:Canvas = new Canvas();
+		public var content:PanZoomContent = new PanZoomContent();
 		
 		/**
 		 * Sets the border color of the <strong>content</strong> container, or pannable/zoomable area.
@@ -121,6 +122,16 @@ package org.rockholla.controls.panzoom
 		 */
 		[Bindable]
 		public var childPreventsPan:Boolean = true;
+		/**
+		 * If true, then the mouse wheel zooming will zoom to cursor point instead of center of screen (a little wonky still)
+		 */
+		[Bindable]
+		public var zoomToCursor:Boolean = true;
+		/**
+		 * If greater than zero, double clicking in the content will zoom "this amount", a scale step value
+		 */
+		[Bindable]
+		public var doubleClickZoomStep:Number = 0;
 		
 		/**
 		 * The width of the container that can be panned/zoomed
@@ -259,6 +270,7 @@ package org.rockholla.controls.panzoom
 			this.dispatchEvent(new PanZoomEvent(PanZoomEvent.PAN));
 			
 		}
+
 		
 		/**
 		 * We want to do some things before the "children" of this container are added, i.e.
@@ -431,11 +443,7 @@ package org.rockholla.controls.panzoom
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
 			
-			if(this._created == false)
-			{
-				super.updateDisplayList(unscaledWidth, unscaledHeight);	
-			}
-			
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			this._updateScrollBars();
 			
 		}
@@ -625,6 +633,11 @@ package org.rockholla.controls.panzoom
 			this.content.addEventListener(MouseEvent.MOUSE_DOWN, _onMouseDown);
 			this.content.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut);
 			this.content.addEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheel);
+			if(this.doubleClickZoomStep > 0)
+			{
+				this.doubleClickEnabled = true;
+				this.content.addEventListener(MouseEvent.DOUBLE_CLICK, _onDoubleClick);
+			}
 			
 		}
 		/**
@@ -641,6 +654,10 @@ package org.rockholla.controls.panzoom
 			if(!exceptMouseWheel)
 			{
 				this.content.removeEventListener(MouseEvent.MOUSE_WHEEL, _onMouseWheel);	
+			}
+			if(this.content.hasEventListener(MouseEvent.DOUBLE_CLICK))
+			{
+				this.content.removeEventListener(MouseEvent.DOUBLE_CLICK, _onDoubleClick);		
 			}
 			
 		}
@@ -730,6 +747,11 @@ package org.rockholla.controls.panzoom
 			CursorManager.removeAllCursors();	
 		}
 		
+		protected function _onDoubleClick(event:MouseEvent):void
+		{
+			this.zoomToPoint(new Point(this.content.mouseX, this.content.mouseY), this.scale + this.doubleClickZoomStep, false);
+		}
+		
 		/**
 		 * A centralized method for enforcing that the <strong>content</strong> container has not been "placed" invalidly, and if it has,
 		 * then snap it back to the closest valid state.
@@ -802,10 +824,7 @@ package org.rockholla.controls.panzoom
 		protected function _setCursorHandOpen():void 
 		{
 			
-			if(CursorManager.currentCursorID) 
-			{
-				CursorManager.removeCursor(CursorManager.currentCursorID);
-			}
+			CursorManager.removeAllCursors();
 			CursorManager.setCursor(this._iconHandOpen);
 			
 		}
@@ -817,11 +836,20 @@ package org.rockholla.controls.panzoom
 		protected function _setCursorHandClosed():void 
 		{
 			
-			if(CursorManager.currentCursorID) 
-			{
-				CursorManager.removeCursor(CursorManager.currentCursorID);
-			}
+			CursorManager.removeAllCursors();
 			CursorManager.setCursor(this._iconHandClosed);
+			
+		}
+		
+		public function zoomToPoint(point:Point, toScale:Number, validateWarn:Boolean = true):void
+		{
+			
+			if(this._validateScale(toScale, validateWarn)) 
+			{
+				this._viewCenter.x = point.x;
+				this._viewCenter.y = point.y;
+				this.zoom(toScale);	
+			}
 			
 		}
 		
@@ -831,10 +859,10 @@ package org.rockholla.controls.panzoom
 		 * @param toScale	the zoom destination scale
 		 * 
 		 */
-		public function zoom(toScale:Number):void 
+		public function zoom(toScale:Number, validateWarn:Boolean = true):void 
 		{
 			
-			if(toScale >= this.scaleMin && toScale <= this.scaleMax) 
+			if(this._validateScale(toScale, validateWarn)) 
 			{
 				this.scale = toScale;
 				
@@ -859,7 +887,7 @@ package org.rockholla.controls.panzoom
 		 */
 		public function zoomDirectional(directionalSpeed:int):void 
 		{
-			this.zoom(this.scale + (.04 * directionalSpeed));
+			this.zoom(this.scale + (.04 * directionalSpeed), false);
 		}
 		
 		/**
@@ -870,6 +898,11 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onMouseWheel(event:MouseEvent):void 
 		{ 
+			if(this.zoomToCursor)
+			{
+				this._viewCenter.x = this.content.mouseX;
+				this._viewCenter.y = this.content.mouseY;
+			}
 			this.zoomDirectional(event.delta); 
 		}
 		
@@ -927,6 +960,19 @@ package org.rockholla.controls.panzoom
 			}
 			return false;
 			
+		}
+		
+		protected function _validateScale(scale:Number, validateWarn:Boolean):Boolean
+		{
+			if(scale >= this.scaleMin && scale <= this.scaleMax) 
+			{
+				return true;
+			}
+			if(validateWarn)
+			{
+				trace("WARNING: scale value (" + scale + ") is out of bounds of your acceptable scale range");
+			}
+			return false;
 		}
 		
 	}
