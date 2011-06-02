@@ -92,27 +92,27 @@ package org.rockholla.controls.panzoom
 		public var content:PanZoomContent = new PanZoomContent();
 		
 		/**
-		 * Sets the border color of the <strong>content</strong> container, or pannable/zoomable area.
+		 * The border color of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBorderColor:uint = 0xFFFFFF;
 		/**
-		 * Sets the border alpha of the <strong>content</strong> container, or pannable/zoomable area.
+		 * The border alpha of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBorderAlpha:Number = 1;
 		/**
-		 * Sets the border thickness of the <strong>content</strong> container, or pannable/zoomable area.
+		 * The border thickness of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBorderThickness:Number = 1;
 		/**
-		 * Sets the background color of the <strong>content</strong> container, or pannable/zoomable area.
+		 * The background color of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBackgroundColor:uint = 0xFFFFFF;
 		/**
-		 * Sets the background alpha of the <strong>content</strong> container, or pannable/zoomable area.
+		 * The background alpha of the <strong>content</strong> container, or pannable/zoomable area.
 		 */
 		[Bindable]
 		public var contentBackgroundAlpha:Number = 1;
@@ -151,11 +151,11 @@ package org.rockholla.controls.panzoom
 		 */
 		protected var _scaleMax:Number = 5;
 		/**
-		 * The initial zoom level
+		 * The zoom level, initially set to 1
 		 */
 		protected var _scale:Number = 1;
 		/**
-		 * The default zoom speed
+		 * The base zoom speed, initially set to 1
 		 */
 		protected var _zoomSpeed:Number = 1;
 		
@@ -529,7 +529,7 @@ package org.rockholla.controls.panzoom
 			this._contentWidth = value;
 		}
 		/**
-		 * Gets the width of the <strong>content</strong> container
+		 * The width of the <strong>content</strong> container
 		 * 
 		 * @return the width
 		 * 
@@ -550,7 +550,7 @@ package org.rockholla.controls.panzoom
 			this._contentHeight = value;
 		}
 		/**
-		 * Gets the height of the <strong>content</strong> container
+		 * The height of the <strong>content</strong> container
 		 * 
 		 * @return the height
 		 * 
@@ -572,7 +572,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Gets the minimum zoom level
+		 * The minimum zoom level
 		 * 
 		 * @return the minimum level
 		 * 
@@ -594,7 +594,7 @@ package org.rockholla.controls.panzoom
 			this._scaleMax = value; 
 		}
 		/**
-		 * Gets the maximum zoom level
+		 * The maximum zoom level
 		 * 
 		 * @return the maximum level
 		 * 
@@ -616,7 +616,7 @@ package org.rockholla.controls.panzoom
 			this._scale = value;
 		}
 		/**
-		 * Gets the current scale or zoom level
+		 * The current scale or zoom level
 		 * 
 		 * @return the scale, zoom level
 		 * 
@@ -627,7 +627,7 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Sets the zoom speed pivot
+		 * Sets the zoom speed base value
 		 * 
 		 * @param value	the positive number speed
 		 * 
@@ -642,7 +642,7 @@ package org.rockholla.controls.panzoom
 			this._zoomSpeed = value;
 		}
 		/**
-		 * Gets the zoom speed pivot
+		 * The zoom speed base value
 		 * 
 		 * @return the zoom speed
 		 * 
