@@ -154,6 +154,10 @@ package org.rockholla.controls.panzoom
 		 * The initial zoom level
 		 */
 		protected var _scale:Number = 1;
+		/**
+		 * The default zoom speed
+		 */
+		protected var _zoomSpeed:Number = 1;
 		
 		/**
 		 * Our custom vertical scroll bar, replacing the built-in Flex one
@@ -202,6 +206,7 @@ package org.rockholla.controls.panzoom
 			this.horizontalScrollPolicy = "off";
 			this.verticalScrollPolicy = "off";
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, this._onCreationComplete);
+			
 		}
 		
 		/**
@@ -518,6 +523,7 @@ package org.rockholla.controls.panzoom
 		 * @param value	the width
 		 * 
 		 */
+		[Bindable]
 		public function set contentWidth(value:Number):void 
 		{
 			this._contentWidth = value;
@@ -538,6 +544,7 @@ package org.rockholla.controls.panzoom
 		 * @param value	the height
 		 * 
 		 */
+		[Bindable]
 		public function set contentHeight(value:Number):void 
 		{
 			this._contentHeight = value;
@@ -558,6 +565,7 @@ package org.rockholla.controls.panzoom
 		 * @param value	the minimum level
 		 * 
 		 */
+		[Bindable]
 		public function set scaleMin(value:Number):void 
 		{
 			this._scaleMin = value;
@@ -569,10 +577,21 @@ package org.rockholla.controls.panzoom
 		 * @return the minimum level
 		 * 
 		 */
-		[Bindable]
 		public function get scaleMin():Number 
 		{ 
 			return this._scaleMin; 
+		}
+	
+		/**
+		 * Sets the maximum zoom level
+		 * 
+		 * @param the maximum level
+		 * 
+		 */
+		[Bindable]
+		public function set scaleMax(value:Number):void 
+		{ 
+			this._scaleMax = value; 
 		}
 		/**
 		 * Gets the maximum zoom level
@@ -580,27 +599,18 @@ package org.rockholla.controls.panzoom
 		 * @return the maximum level
 		 * 
 		 */
-		[Bindable]
 		public function get scaleMax():Number 
 		{ 
 			return this._scaleMax; 
 		}
-		/**
-		 * Sets the maximum zoom level
-		 * 
-		 * @param the maximum level
-		 * 
-		 */
-		public function set scaleMax(value:Number):void 
-		{ 
-			this._scaleMax = value; 
-		}
+	
 		/**
 		 * Sets the scale or zoom level of the content
 		 * 
 		 * @param value the scale, zoom level to set
 		 * 
 		 */
+		[Bindable]
 		public function set scale(value:Number):void 
 		{ 
 			this._scale = value;
@@ -611,10 +621,35 @@ package org.rockholla.controls.panzoom
 		 * @return the scale, zoom level
 		 * 
 		 */
-		[Bindable]
 		public function get scale():Number 
 		{ 
 			return this._scale; 
+		}
+		
+		/**
+		 * Sets the zoom speed pivot
+		 * 
+		 * @param value	the positive number speed
+		 * 
+		 */
+		[Bindable]
+		public function set zoomSpeed(value:Number):void
+		{
+			if(value < 0)
+			{
+				throw new PanZoomComponentError("You can't set a zoom speed less than zero");
+			}
+			this._zoomSpeed = value;
+		}
+		/**
+		 * Gets the zoom speed pivot
+		 * 
+		 * @return the zoom speed
+		 * 
+		 */
+		public function get zoomSpeed():Number
+		{
+			return this._zoomSpeed;
 		}
 		
 		/**
@@ -862,7 +897,7 @@ package org.rockholla.controls.panzoom
 			{
 				this._viewCenter.x = point.x;
 				this._viewCenter.y = point.y;
-				this.zoom(toScale);	
+				this.zoom(toScale, false, true);	
 			}
 			
 		}
@@ -873,11 +908,14 @@ package org.rockholla.controls.panzoom
 		 * @param toScale	the zoom destination scale
 		 * 
 		 */
-		public function zoom(toScale:Number, validateWarn:Boolean = true):void 
+		public function zoom(toScale:Number, validateWarn:Boolean = true, computeDuration:Boolean = false):void 
 		{
 			
 			if(this._validateScale(toScale, validateWarn)) 
 			{
+				// Let's adjust zoom time based on scale jump if calling context should compute duration
+				var duration:Number = (computeDuration == true ? Math.abs(this.scale - toScale) : 0.2)/this._zoomSpeed;
+				
 				this.scale = toScale;
 				
 				this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - this._vScrollBar.width)/2)/this.scale)) * this.scale;
@@ -885,7 +923,7 @@ package org.rockholla.controls.panzoom
 				
 				this._enforcePlacementRules();
 				
-				TweenLite.to(this.content, 0.2, { scaleX: this.scale, scaleY: this.scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
+				TweenLite.to(this.content, duration, { scaleX: this.scale, scaleY: this.scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
 				
 				this.dispatchEvent(new PanZoomEvent(PanZoomEvent.ZOOM));
 			}
