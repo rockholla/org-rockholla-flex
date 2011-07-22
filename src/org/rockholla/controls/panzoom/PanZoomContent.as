@@ -28,9 +28,11 @@ package org.rockholla.controls.panzoom
 		
 		protected var _created:Boolean = false;
 		
-		public function PanZoomContent()
+		public function PanZoomContent(width:Number = 0, height:Number = 0)
 		{
 			super();
+			this.width = width;
+			this.height = height;
 			this.horizontalScrollPolicy = "off";
 			this.verticalScrollPolicy = "off";
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, _onCreationComplete);
@@ -38,16 +40,6 @@ package org.rockholla.controls.panzoom
 		
 		protected function _onCreationComplete(event:FlexEvent):void
 		{
-			if(this.width <= 0) 
-			{
-				throw new PanZoomComponentError("Width of the PanZoomContent must be greater than zero.  This error likely means you just haven't set it.");
-				return;
-			}
-			if(this.height <= 0) 
-			{
-				throw new PanZoomComponentError("Height of the PanZoomContent must be greater than zero.  This error likely means you just haven't set it.");
-				return;
-			}
 			this._created = true;
 		}
 		

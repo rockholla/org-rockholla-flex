@@ -78,8 +78,11 @@ package org.rockholla.controls.panzoom
 		 * the bounded area that can be panned and zoomed.
 		 */
 		public var content:PanZoomContent;
-		
-		
+
+		/**
+		 * When true, while the mouse is over a child within the <strong>content</strong> container disables normal panning
+		 * by drag and drop.
+		 */
 		[Bindable]
 		public var childPreventsPan:Boolean = true;
 		/**
@@ -270,6 +273,17 @@ package org.rockholla.controls.panzoom
 			}
 			
 			this.content = children[0];
+			
+			if(this.content.width <= 0) 
+			{
+				throw new PanZoomComponentError("Width of the PanZoomContent must be greater than zero.  This error likely means you just haven't set it.");
+				return;
+			}
+			if(this.content.height <= 0) 
+			{
+				throw new PanZoomComponentError("Height of the PanZoomContent must be greater than zero.  This error likely means you just haven't set it.");
+				return;
+			}
 			
 			this.addChild(this._vScrollBar);
 			this.addChild(this._hScrollBar);
