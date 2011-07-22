@@ -54,6 +54,15 @@ package org.rockholla.controls.panzoom
 			return this._created;
 		}
 		
+		public function get displayedBorderThickness():Number
+		{
+			if(this.borderColor != 0)
+			{
+				return this.borderThickness;
+			}
+			return 0;
+		}
+		
 		protected function _drawContent():void
 		{
 			
