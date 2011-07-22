@@ -32,6 +32,10 @@ package org.rockholla.events
 		 * Event relevant to panning
 		 */
 		public static const PAN:String = "pan";
+		/**
+		 * Content redrawn
+		 */
+		public static const CONTENT_REDRAWN:String = "contentRedrawn";
 		
 		/**
 		 * Constructor
