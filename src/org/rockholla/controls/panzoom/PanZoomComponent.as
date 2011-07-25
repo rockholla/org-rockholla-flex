@@ -878,9 +878,14 @@ package org.rockholla.controls.panzoom
 		 */
 		public function zoomToPoint(point:Point, toScale:Number):void
 		{
-			
+			// we're going to opt for just fixing invalid values here instead of throwing an error
+			if(point.x > this._content.widthAsSet) point.x = this._content.widthAsSet;
+			if(point.x < 0) point.x = 0;
+			if(point.y > this._content.heightAsSet) point.y = this._content.heightAsSet;
+			if(point.y < 0) point.y = 0;
 			this._viewCenter.x = point.x;
 			this._viewCenter.y = point.y;
+			
 			this.zoom(toScale);
 			
 		}
@@ -964,6 +969,11 @@ package org.rockholla.controls.panzoom
 			else
 			{
 				// with mouse wheel zooming disabled, we want the mouse wheel to scroll/pan instead
+				if(this._cornerPointInView(TOP_LEFT) && this._cornerPointInView(BOTTOM_RIGHT))
+				{
+					// we can see the top and the bottom, so no scrolling should happen
+					return;
+				}
 				this._vScrollBar.scrollPosition -= (event.delta < 0 ? -10 : 10) + (event.delta * 3);
 				if(this._vScrollBar.scrollPosition > this._vScrollBar.maxScrollPosition)
 				{

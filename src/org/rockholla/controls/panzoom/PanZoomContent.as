@@ -129,14 +129,14 @@ package org.rockholla.controls.panzoom
 			
 			// draw the background
 			this.graphics.beginFill(this._backgroundColor, this._backgroundAlpha);
-			this.graphics.drawRect(0, 0, this.width, this.height);
+			this.graphics.drawRect(0, 0, this.widthAsSet, this.heightAsSet);
 			this.graphics.endFill();
 			
 			// draw the border
 			if(this._borderThickness > 0)
 			{
 				this.graphics.lineStyle(this._borderThickness, this._borderColor, this._borderAlpha);
-				this.graphics.drawRect(0, 0, this.width, this.height);	
+				this.graphics.drawRect(0, 0, this.widthAsSet, this.heightAsSet);	
 			}
 
 			if(isRedraw && this._created)
