@@ -26,7 +26,7 @@ CHANGE LOG
 1.2.2 2011-06-01
 - patch for updating the project docs
 
-1.3.0 2011-07-24
+2.0.0 2011-07-24
 ** WARNING: backwards incompatible release **
 - PanZoomComponent: removed support for the components child-related overrides, the component now requires that you pass in an instance of a PanZoomComponent as the component's only child, but it isn't all bad news, because content can be manipulated, replaced, etc. at runtime; additionally, it's clearer to the developer the construction of the component and its content
 - PanZoomComponent: made PanZoomContent more extendable, communication/events added for communication b/w content and PanZoomComponent
