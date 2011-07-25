@@ -37,6 +37,8 @@ package org.rockholla.events
 		 */
 		public static const CONTENT_REDRAWN:String = "contentRedrawn";
 		
+		public static const SLIDER_CHANGED:String = "sliderChanged";
+		
 		/**
 		 * Constructor
 		 * 

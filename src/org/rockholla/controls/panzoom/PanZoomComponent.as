@@ -18,7 +18,6 @@ package org.rockholla.controls.panzoom
 	import com.adobe.utils.mousewheel.MouseWheelEnabler;
 	import com.greensock.TweenLite;
 	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -30,6 +29,7 @@ package org.rockholla.controls.panzoom
 	import mx.events.FlexEvent;
 	import mx.events.ResizeEvent;
 	import mx.events.ScrollEvent;
+	import mx.events.ScrollEventDirection;
 	import mx.managers.CursorManager;
 	
 	import org.rockholla.events.PanZoomEvent;
@@ -48,8 +48,8 @@ package org.rockholla.controls.panzoom
 	[Event(name="pan", type="org.rockholla.events.PanZoomEvent")]
 	
 	/**
-	 * The PanZoomComponent is a Flex 3 and 4 compatible control, capable of receiving standard flex components,
-	 * placing them within a container that can be panned and zoomed via dragging, dropping, and mouse wheel operation.
+	 * The PanZoomComponent is a Flex 3 and 4 compatible control, capable of laying out flex components
+	 * within a container that can be panned and zoomed via dragging, dropping, and mouse wheel operation.
 	 * 
 	 * @langversion 3.0
 	 */
@@ -72,22 +72,39 @@ package org.rockholla.controls.panzoom
 		 * Constant to identify a bottom right corner 
 		 */
 		public static const BOTTOM_RIGHT:String = "bottomRight";
+		/**
+		 * General error message thrown when an implementation tries to add children directly to the component 
+		 * instead of the content
+		 */
+		public static const INVALID_CHILD_ERROR:String = "The PanZoomComponent must have exactly 1 immediate child of type PanZoomContent.";
+		/**
+		 * General error message thrown when an implementation hasn't set the width/height of the content
+		 */
+		public static const DIMENSIONS_UNSET_ERROR:String = "The width and height of the PanZoomContent must be greater than zero.  This error likely means you just haven't set one or both of these values."
+		/**
+		 * General error message thrown when an implementation tries to access/update/etc. the built-in scrollbars 
+		 * for the component, and instructs on how to access the custom scroll bars instead.
+		 */
+		public static const SCROLL_BARS_ACCESS_ERROR:String = "The scrollbars for the PanZoomComponent do not rely on built in scrollbars.  Please access panHorizontalScrollBar and panVerticalScrollBar properties to access the scrollbars.  If you want to hide or show the scrollbars, use the panScrollBarsVisible method.";
 
 		/**
 		 * When true, while the mouse is over a child within the <strong>content</strong> container disables normal panning
 		 * by drag and drop.
 		 */
 		[Bindable]
+		[Inspectable (defaultValue=true)]
 		public var childPreventsPan:Boolean = true;
 		/**
 		 * If true, then the mouse wheel zooming will zoom to cursor point instead of center of screen (a little wonky still)
 		 */
 		[Bindable]
+		[Inspectable (defaultValue=true)]
 		public var zoomToCursor:Boolean = true;
 		/**
 		 * If greater than zero, double clicking in the content will zoom "this amount", a scale step value
 		 */
 		[Bindable]
+		[Inspectable (defaultValue=0)]
 		public var doubleClickZoomStep:Number = 0;
 		/**
 		 * If set, this point designates a center point for initial view
@@ -98,35 +115,52 @@ package org.rockholla.controls.panzoom
 		 * If set to true, will center the view on load
 		 */
 		[Bindable]
+		[Inspectable (defaultValue=false)]
 		public var centerOnLoad:Boolean = false;
 		/**
 		 * Can be set for initially zooming to a given level, default is 1 (100%)
 		 */
 		[Bindable]
+		[Inspectable (defaultValue=1)]
 		public var initialZoomLevel:Number = 1;
+		/**
+		 * If true, then the mouse wheel operates as a zooming mechanism, if false, then it acts as a scroll 
+		 * up-down mechanism
+		 */
+		[Bindable]
+		[Inspectable (defaultValue=true)]
+		public var mouseWheelZoomingEnabled:Boolean = true;	
+		/**
+		 * If set (not null), this will cause all zoom operations to always zoom centered on this point
+		 */
+		[Bindable]
+		public var fixedZoomPoint:Point;
 		
 		/**
-		 * This is the container where all custom children are placed.  It represents
-		 * the bounded area that can be panned and zoomed.
+		 * This is the container where all custom children are placed.  It represents the bounded area that can be 
+		 * panned and zoomed.
 		 */
 		protected var _content:PanZoomContent;
 		/**
 		 * The minimum zoom level allowed (where 1 is actual size, 100%)
 		 */
+		[Inspectable (defaultValue=0.125)]
 		protected var _scaleMin:Number = 0.125;
 		/**
 		 * The maximum zoom level allowed (where 1 is actual size, 100%)
 		 */
+		[Inspectable (defaultValue=5)]
 		protected var _scaleMax:Number = 5;
 		/**
 		 * The zoom level, initially set to 1
 		 */
+		[Inspectable (defaultValue=1)]
 		protected var _scale:Number = 1;
 		/**
 		 * The base zoom speed, initially set to 1
 		 */
+		[Inspectable (defaultValue=1)]
 		protected var _zoomSpeed:Number = 1;
-		
 		/**
 		 * Our custom vertical scroll bar, replacing the built-in Flex one
 		 */
@@ -138,7 +172,7 @@ package org.rockholla.controls.panzoom
 		/**
 		 * Tracks where the top, left point of the <strong>content</strong> container is for panning/zooming purposes
 		 */
-		protected var _contentTopLeft:Point = new Point(0,0);
+		protected var _contentTopLeft:Point;
 		/**
 		 * Tracks a point where the mouse was clicked for panning/zooming purposes
 		 */
@@ -157,12 +191,12 @@ package org.rockholla.controls.panzoom
 		 * The default container icon, an open hand
 		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandOpen")] 
-		private var _iconHandOpen:Class;
+		private var __iconHandOpen:Class;
 		/**
 		 * The closed icon hand, used when dragging the <strong>content</strong> container around
 		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandClosed")] 
-		private var _iconHandClosed:Class;
+		private var __iconHandClosed:Class;
 		
 		/**
 		 * Constructor
@@ -181,6 +215,7 @@ package org.rockholla.controls.panzoom
 		 * Run when the component and all its initial children have been created
 		 * 
 		 * @param event	the FlexEvent
+		 * 
 		 */
 		protected function _onCreationComplete(event:FlexEvent):void 
 		{
@@ -195,12 +230,23 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
+		/**
+		 * Used to initialize the content container on creation of PanZoomComponent or replacement of the PanZoomContent
+		 * 
+		 */
 		protected function _initializeContent():void
 		{
 			
+			this._contentTopLeft = new Point(0,0);
 			this._activateNormalMouseEvents(true);
-			this._content.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver);
-			this._content.addEventListener(PanZoomEvent.CONTENT_REDRAWN, _onContentRedrawn);
+			if(!this._content.hasEventListener(MouseEvent.MOUSE_OVER))
+			{
+				this._content.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver);	
+			}
+			if(!this._content.hasEventListener(PanZoomEvent.CONTENT_REDRAWN))
+			{
+				this._content.addEventListener(PanZoomEvent.CONTENT_REDRAWN, _onContentRedrawn);	
+			}
 			
 			this._updateViewCenter();
 			if(this.centerOnLoad == true)
@@ -217,20 +263,29 @@ package org.rockholla.controls.panzoom
 			}
 			else
 			{
-				this.zoom(this.initialZoomLevel);	
+				this.zoom(this.initialZoomLevel, false);	
 			}
 			
 		}
 		
+		/**
+		 * Executed when this component is added to the stage
+		 * 
+		 * @param event	the related Event
+		 * 
+		 */
 		protected function _onAddedToStage(event:Event):void
 		{
 			MouseWheelEnabler.init(stage);
 		}
 		
+		/**
+		 * Executed whenever the content is redrawn, i.e. resized, retooled, etc.
+		 * 
+		 */
 		protected function _onContentRedrawn(event:PanZoomEvent):void
 		{
-			// this will reset center after a possible resize
-			this.zoom(this.scale);
+			this._initializeContent();
 		}
 		
 		/**
@@ -248,7 +303,7 @@ package org.rockholla.controls.panzoom
 				this._content.x = -1 * event.position;
 				this._contentTopLeft.x = this._content.x;
 			}
-			else if(event.currentTarget is VScrollBar) 
+			else if(event.currentTarget is VScrollBar || event.currentTarget == null) 
 			{
 				this._content.y = -1 * event.position;
 				this._contentTopLeft.y = this._content.y;	
@@ -259,10 +314,9 @@ package org.rockholla.controls.panzoom
 			
 		}
 		
-		
 		/**
-		 * We want to do some things before the "children" of this container are added, i.e.
-		 * add the actual children, then add the initial "children" of this container to the content
+		 * We want to do some validation of the only expected child, PanZoomContent.  Additionally, we
+		 * are adding the custom scroll bars here.
 		 * 
 		 */
 		override protected function createChildren():void 
@@ -273,7 +327,7 @@ package org.rockholla.controls.panzoom
 			var children:Array = this.getChildren();
 			if(children.length != 1 || (children[0] is PanZoomContent) == false)
 			{
-				throw new PanZoomComponentError("The PanZoomComponent must have exactly 1 immediate child of type PanZoomContent.");
+				throw new PanZoomComponentError(INVALID_CHILD_ERROR);
 				return;
 			}
 			
@@ -281,12 +335,12 @@ package org.rockholla.controls.panzoom
 			
 			if(this._content.width <= 0) 
 			{
-				throw new PanZoomComponentError("Width of the PanZoomContent must be greater than zero.  This error likely means you just haven't set it.");
+				throw new PanZoomComponentError(DIMENSIONS_UNSET_ERROR);
 				return;
 			}
 			if(this._content.height <= 0) 
 			{
-				throw new PanZoomComponentError("Height of the PanZoomContent must be greater than zero.  This error likely means you just haven't set it.");
+				throw new PanZoomComponentError(DIMENSIONS_UNSET_ERROR);
 				return;
 			}
 			
@@ -326,10 +380,10 @@ package org.rockholla.controls.panzoom
 			this._hScrollBar.x = 0;
 			this._hScrollBar.width = unscaledWidth - this._vScrollBar.width;
 			
-			this._hScrollBar.maxScrollPosition = this._content.width * this.scale;
-			this._hScrollBar.pageSize = this._content.width * this.scale;
-			this._vScrollBar.maxScrollPosition = this._content.height * this.scale;
-			this._vScrollBar.pageSize = this._content.height * this.scale;
+			this._hScrollBar.maxScrollPosition = this._content.width * this._scale;
+			this._hScrollBar.pageSize = this._content.width * this._scale;
+			this._vScrollBar.maxScrollPosition = this._content.height * this._scale;
+			this._vScrollBar.pageSize = this._content.height * this._scale;
 			
 			// draw bottom right rect covering up area where scrollbars meet
 			this._bottomRightMask.graphics.clear();
@@ -337,8 +391,8 @@ package org.rockholla.controls.panzoom
 			this._bottomRightMask.graphics.drawRect(this.width - this._vScrollBar.width, this.height - this._hScrollBar.height, this._vScrollBar.width, this._hScrollBar.height);
 			this._bottomRightMask.graphics.endFill();
 			
-			this._hScrollBar.maxScrollPosition = (this._content.width * this.scale) - (this.width - this._vScrollBar.width);
-			this._vScrollBar.maxScrollPosition = (this._content.height * this.scale) - (this.height - this._hScrollBar.height);
+			this._hScrollBar.maxScrollPosition = (this._content.width * this._scale) - (this.width - this._vScrollBar.width);
+			this._vScrollBar.maxScrollPosition = (this._content.height * this._scale) - (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0));
 			this._hScrollBar.scrollPosition = -1 * this._content.x;
 			this._vScrollBar.scrollPosition = -1 * this._content.y;
 			
@@ -349,14 +403,14 @@ package org.rockholla.controls.panzoom
 		}
 		
 		/**
-		 * Used for keeping track of the center point of the viewable area of the <strong>content</strong> container
+		 * Used for keeping track of the center point of the viewable area of the PanZoomContent container
 		 * 
 		 */
 		protected function _updateViewCenter():void 
 		{
 			
-			var contentPixelsPerViewPixel:Number = (this._content.width/this.scale)/this._content.width;
-			if((this.width - this._vScrollBar.width) >= (this._content.width * this.scale)) 
+			var contentPixelsPerViewPixel:Number = (this._content.width/this._scale)/this._content.width;
+			if((this.width - this._vScrollBar.width) >= (this._content.width * this._scale)) 
 			{
 				this._viewCenter.x = this._content.width/2;
 			} 
@@ -364,7 +418,7 @@ package org.rockholla.controls.panzoom
 			{
 				this._viewCenter.x = (-1 * this._contentTopLeft.x * contentPixelsPerViewPixel) + ((this.width - this._vScrollBar.width)/2 * contentPixelsPerViewPixel);
 			}
-			if((this.height - this._hScrollBar.height) >= (this._content.height * this.scale)) 
+			if((this.height - this._hScrollBar.height) >= (this._content.height * this._scale)) 
 			{
 				this._viewCenter.y = this._content.height/2;
 			} 
@@ -375,6 +429,12 @@ package org.rockholla.controls.panzoom
 			
 		}
 
+		/**
+		 * Setter for the PanZoomContent, used to replace the content container
+		 * 
+		 * @param content	the new PanZoomContent
+		 * 
+		 */
 		public function set content(content:PanZoomContent):void
 		{
 			var childIndex:int = this.getChildIndex(this._content);
@@ -385,6 +445,12 @@ package org.rockholla.controls.panzoom
 			this._initializeContent();
 		}
 		
+		/**
+		 * Gets the PanZoomContent for the component
+		 * 
+		 * @return the current PanZoomContent
+		 * 
+		 */
 		public function get content():PanZoomContent
 		{
 			return this._content;
@@ -444,7 +510,17 @@ package org.rockholla.controls.panzoom
 		[Bindable]
 		public function set scale(value:Number):void 
 		{ 
-			this._scale = value;
+			if(value > this._scaleMax)
+			{
+				throw new PanZoomComponentError(value + " is greater than the maxium allowed scale setting.");
+				return;
+			}
+			if(value < this._scaleMin)
+			{
+				throw new PanZoomComponentError(value + " is less than the minimum allowed scale setting.");
+				return;
+			}
+			this.zoom(value);
 		}
 		/**
 		 * The current scale or zoom level
@@ -468,7 +544,7 @@ package org.rockholla.controls.panzoom
 		{
 			if(value < 0)
 			{
-				throw new PanZoomComponentError("You can't set a zoom speed less than zero");
+				throw new PanZoomComponentError("You can't set a zoom speed less than zero.");
 			}
 			this._zoomSpeed = value;
 		}
@@ -483,26 +559,87 @@ package org.rockholla.controls.panzoom
 			return this._zoomSpeed;
 		}
 		
+		/**
+		 * Gets the custom horizontal scroll bar for this component
+		 * 
+		 * @return the HScrollBar
+		 * 
+		 */
 		public function get panHorizontalScrollBar():HScrollBar
 		{
 			return this._hScrollBar;
 		}
 		
+		/**
+		 * Gets the custom vertical scroll bar for this component
+		 * 
+		 * @return the VScrollBar
+		 * 
+		 */
 		public function get panVerticalScrollBar():VScrollBar
 		{
 			return this._vScrollBar;
 		}
 		
-		public function get scrollBarsVisible():Boolean
+		/**
+		 * Gets whether or not the custom scroll bars are set visible
+		 * 
+		 * @return true or false
+		 * 
+		 */
+		public function get panScrollBarsVisible():Boolean
 		{
 			return this._hScrollBar.visible;
 		}
 		
-		public function set scrollBarsVisible(value:Boolean):void
+		/**
+		 * Sets whether or not the custom scroll bars are visible
+		 * 
+		 * @param value	true or false
+		 * 
+		 */
+		public function set panScrollBarsVisible(value:Boolean):void
 		{
 			this._hScrollBar.visible = value;
 			this._vScrollBar.visible = value;
 			this._bottomRightMask.visible = value;
+		}
+		
+		/**
+		 * Override of the default setter for horizontal scroll policy, so we can throw an error if an implementation 
+		 * tries to set this to "on"
+		 * 
+		 * @param value	the scroll policy
+		 * 
+		 */
+		override public function set horizontalScrollPolicy(value:String):void
+		{
+			if(this.content != null && this.content.created)
+			{
+				throw new PanZoomComponentError(SCROLL_BARS_ACCESS_ERROR);
+			}
+			else
+			{
+				super.horizontalScrollPolicy = value;
+			}
+		}
+		/**
+		 * Override of the default setter for vertical scroll policy, so we can throw an error if an implementation 
+		 * tries to set this to "on"
+		 * 
+		 * @param value	the scroll policy
+		 * 
+		 */
+		override public function set verticalScrollPolicy(value:String):void
+		{
+			if(this.content != null && this.content.created)
+			{
+				throw new PanZoomComponentError(SCROLL_BARS_ACCESS_ERROR);
+			}
+			else
+			{
+				super.verticalScrollPolicy = value;
+			}
 		}
 		
 		/**
@@ -643,7 +780,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onDoubleClick(event:MouseEvent):void
 		{
-			this.zoomToPoint(new Point(this._content.mouseX, this._content.mouseY), this.scale + this.doubleClickZoomStep);
+			this.zoomToPoint(new Point(this._content.mouseX, this._content.mouseY), this._scale + this.doubleClickZoomStep);
 		}
 		
 		/**
@@ -659,17 +796,17 @@ package org.rockholla.controls.panzoom
 			var xLocked:Boolean = false;
 			var yLocked:Boolean = false;
 			var updateViewCenter:Boolean = false;
-			if(this._content.width * this.scale <= (this.width - (this.scrollBarsVisible ? this._vScrollBar.width : 0))) 
+			if(this._content.width * this._scale <= (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))) 
 			{
 				// center content on x axis
-				this._contentTopLeft.x = ((this.width - (this.scrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.width * this.scale))/2;
+				this._contentTopLeft.x = ((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.width * this._scale))/2;
 				xLocked = true;
 				updateViewCenter = true;
 			}
-			if(this._content.height * this.scale <= (this.height - (this.scrollBarsVisible ? this._hScrollBar.height : 0))) 
+			if(this._content.height * this._scale <= (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))) 
 			{
 				// center content on y axis
-				this._contentTopLeft.y = (this.height - (this._content.height * this.scale))/2;
+				this._contentTopLeft.y = (this.height - (this._content.height * this._scale))/2;
 				yLocked = true;
 				updateViewCenter = true;
 			}
@@ -683,7 +820,7 @@ package org.rockholla.controls.panzoom
 				} 
 				else if(this._contentPointInView(this._content.width.toString(), null)) 
 				{
-					this._contentTopLeft.x = (this.width - (this.scrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.width * this.scale);
+					this._contentTopLeft.x = (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.width * this._scale);
 					updateViewCenter = true;
 				}
 			}
@@ -696,7 +833,7 @@ package org.rockholla.controls.panzoom
 				} 
 				else if(this._contentPointInView(null, this._content.height.toString())) 
 				{
-					this._contentTopLeft.y = (this.height - (this.scrollBarsVisible ? this._hScrollBar.height : 0)) - (this._content.height * this.scale);
+					this._contentTopLeft.y = (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0)) - (this._content.height * this._scale);
 					updateViewCenter = true;
 				}
 			}
@@ -719,7 +856,7 @@ package org.rockholla.controls.panzoom
 		{
 			
 			CursorManager.removeAllCursors();
-			CursorManager.setCursor(this._iconHandOpen);
+			CursorManager.setCursor(this.__iconHandOpen);
 			
 		}
 		
@@ -731,7 +868,7 @@ package org.rockholla.controls.panzoom
 		{
 			
 			CursorManager.removeAllCursors();
-			CursorManager.setCursor(this._iconHandClosed);
+			CursorManager.setCursor(this.__iconHandClosed);
 			
 		}
 		
@@ -748,14 +885,20 @@ package org.rockholla.controls.panzoom
 			
 			this._viewCenter.x = point.x;
 			this._viewCenter.y = point.y;
-			this.zoom(toScale, true);
+			this.zoom(toScale);
 			
 		}
 		
+		/**
+		 * Used to fix a pending scale-to value that might fall out of the valid range
+		 * 
+		 * @param toScale	the pending scale-to value
+		 * 
+		 */
 		protected function _fixToScale(toScale:Number):Number
 		{
-			if(toScale > this.scaleMax) return this.scaleMax;
-			if(toScale < this.scaleMin) return this.scaleMin;
+			if(toScale > this._scaleMax) return this._scaleMax;
+			if(toScale < this._scaleMin) return this._scaleMin;
 			return toScale;
 		}
 		
@@ -765,22 +908,28 @@ package org.rockholla.controls.panzoom
 		 * @param toScale	the zoom destination scale
 		 * 
 		 */
-		public function zoom(toScale:Number, computeDuration:Boolean = false):void 
+		public function zoom(toScale:Number, computeDuration:Boolean = true):void 
 		{
 			
 			toScale = this._fixToScale(toScale);
 			
 			// Let's adjust zoom time based on scale jump if calling context should compute duration
-			var duration:Number = (computeDuration == true ? Math.abs(this.scale - toScale) : 0.2)/this._zoomSpeed;
+			var duration:Number = (computeDuration == true ? Math.abs(this._scale - toScale) : 0.2)/this._zoomSpeed;
 			
-			this.scale = toScale;
+			this._scale = toScale;
 			
-			this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - this._vScrollBar.width)/2)/this.scale)) * this.scale;
-			this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - this._hScrollBar.height)/2)/this.scale)) * this.scale;
+			if(this.fixedZoomPoint != null)
+			{
+				this._viewCenter.x = this.fixedZoomPoint.x;
+				this._viewCenter.y = this.fixedZoomPoint.y;
+			}
+
+			this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - this._vScrollBar.width)/2)/this._scale)) * this._scale;
+			this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - this._hScrollBar.height)/2)/this._scale)) * this._scale;
 			
 			this._enforcePlacementRules();
 			
-			TweenLite.to(this._content, duration, { scaleX: this.scale, scaleY: this.scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
+			TweenLite.to(this._content, duration, { scaleX: this._scale, scaleY: this._scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
 			
 			this.dispatchEvent(new PanZoomEvent(PanZoomEvent.ZOOM));
 			
@@ -795,7 +944,7 @@ package org.rockholla.controls.panzoom
 		 */
 		public function zoomDirectional(directionalSpeed:int):void 
 		{
-			this.zoom(this.scale + (.04 * directionalSpeed));
+			this.zoom(this._scale + (.04 * directionalSpeed), false);
 		}
 		
 		/**
@@ -806,12 +955,33 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onMouseWheel(event:MouseEvent):void 
 		{ 
-			if(this.zoomToCursor)
+			
+			if(this.mouseWheelZoomingEnabled)
 			{
-				this._viewCenter.x = this._content.mouseX;
-				this._viewCenter.y = this._content.mouseY;
+				if(this.zoomToCursor)
+				{
+					this._viewCenter.x = this._content.mouseX;
+					this._viewCenter.y = this._content.mouseY;
+				}
+				this.zoomDirectional(event.delta);	
+			} 
+			else
+			{
+				// with mouse wheel zooming disabled, we want the mouse wheel to scroll/pan instead
+				this._vScrollBar.scrollPosition -= (event.delta < 0 ? -10 : 10) + (event.delta * 3);
+				if(this._vScrollBar.scrollPosition > this._vScrollBar.maxScrollPosition)
+				{
+					this._vScrollBar.scrollPosition = this._vScrollBar.maxScrollPosition;
+				}
+				if(this._vScrollBar.scrollPosition < 0)
+				{
+					this._vScrollBar.scrollPosition = 0;
+				}
+				var scrollEvent:ScrollEvent = new ScrollEvent(ScrollEvent.SCROLL, false, false, null, this._vScrollBar.scrollPosition, ScrollEventDirection.VERTICAL, event.delta);
+				this._onScrollBarScroll(scrollEvent);
+				
 			}
-			this.zoomDirectional(event.delta); 
+			
 		}
 		
 		/**
@@ -858,10 +1028,10 @@ package org.rockholla.controls.panzoom
 			// this function should be run after calculations and BEFORE physical updating
 			// we have top left
 			// if (content top x + (x * scale)) is less than or equal to this.width then x is in view
-			if(x == null || ((this._contentTopLeft.x + (Number(x) * this.scale)) <= (this.width - this._vScrollBar.width) && (this._contentTopLeft.x + (Number(x) * this.scale)) >= 0)) 
+			if(x == null || ((this._contentTopLeft.x + (Number(x) * this._scale)) <= (this.width - this._vScrollBar.width) && (this._contentTopLeft.x + (Number(x) * this._scale)) >= 0)) 
 			{
 				// no perform the same calc for y
-				if(y == null || ((this._contentTopLeft.y + (Number(y) * this.scale)) <= (this.height - this._hScrollBar.height) && (this._contentTopLeft.y + (Number(y) * this.scale)) >= 0)) 
+				if(y == null || ((this._contentTopLeft.y + (Number(y) * this._scale)) <= (this.height - this._hScrollBar.height) && (this._contentTopLeft.y + (Number(y) * this._scale)) >= 0)) 
 				{
 					return true;
 				}

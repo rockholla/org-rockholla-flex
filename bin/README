@@ -3,11 +3,38 @@ please use the latest version SWC.
 
 CHANGE LOG
 ------------------------------------------------------------------
-- 2011-01-20: 1.0.0
-	1) First official release
+1.0.0 2011-01-20
+- First official release
 	
-- 2011-01-22: 1.1.0
-	1) Minor release to enable overrides for getChild-related methods in PanZoomComponent, needing to pull the children from the embedded content container.
+1.1.0 2011-01-22
+- PanZoomComponent: Minor release to enable overrides for getChild-related methods in PanZoomComponent, needing to pull the children from the embedded content container.
 
-- 2011-01-22: 1.1.1
-	1) Fixing bug for getChild-related method overrides in PanZoomComponent.  They needed to wait to overrides until the component creation was complete.  
+1.1.1 2011-01-22
+- PanZoomComponent: Fixing bug for getChild-related method overrides in PanZoomComponent.  They needed to wait to overrides until the component creation was complete.  
+
+1.1.2 2011-03-22
+- PanZoomComponent: child-related overrides were deemed a vulnerable "feature", so hacking a few fixes to prevent more common errors for now
+
+1.2.0 2011-06-01
+- PanZoomComponent: added support for zooming to a particular point/scale
+- PanZoomComponent: added scrollRect support, you can now set scrollRect on the content to zoom to a particular window/rectangular view
+- PanZoomComponent: added initial support for zooming to cursor using the mousewheel
+- PanZoomComponent: added support for setting zoom speed for operations that aren't variable speed (i.e., mouse wheel zooming is unaffected by this setting)
+
+1.2.1 2011-06-01
+- patch for naming the release swc correctly
+
+1.2.2 2011-06-01
+- patch for updating the project docs
+
+1.3.0 2011-07-24
+** WARNING: backwards incompatible release **
+- PanZoomComponent: removed support for the components child-related overrides, the component now requires that you pass in an instance of a PanZoomComponent as the component's only child, but it isn't all bad news, because content can be manipulated, replaced, etc. at runtime; additionally, it's clearer to the developer the construction of the component and its content
+- PanZoomComponent: made PanZoomContent more extendable, communication/events added for communication b/w content and PanZoomComponent
+- PanZoomComponent: added support for initially loading centered on a particular point
+- PanZoomComponent: added support for fixing the zoom point for all zooming operations
+- PanZoomComponent: added support for setting the initial scale/zoom level
+- PanZoomComponent: added support for disabling mouse wheel zooming, and in turn making the mouse wheel operate in a default way--as a vertical scrolling mechanism
+- PanZoomComponent: added support for accessing the custom scroll bars, and a property that can be used for showing/hiding the scrollbars
+- PanZoomComponent: fixed problem with setting the scale value manually
+- PanZoomComponent: added validation not yet present for things like ensuring that content dimensions are set, etc.
