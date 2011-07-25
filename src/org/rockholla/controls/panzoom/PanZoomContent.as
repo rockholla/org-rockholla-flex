@@ -33,6 +33,9 @@ package org.rockholla.controls.panzoom
 	public class PanZoomContent extends Canvas
 	{
 		
+		protected var _width:Number;
+		protected var _height:Number;
+		
 		/**
 		 * The background color for the content
 		 */
@@ -135,7 +138,7 @@ package org.rockholla.controls.panzoom
 				this.graphics.lineStyle(this._borderThickness, this._borderColor, this._borderAlpha);
 				this.graphics.drawRect(0, 0, this.width, this.height);	
 			}
-			
+
 			if(isRedraw && this._created)
 			{
 				this.dispatchEvent(new PanZoomEvent(PanZoomEvent.CONTENT_REDRAWN));
@@ -152,6 +155,7 @@ package org.rockholla.controls.panzoom
 		override public function set width(value:Number):void
 		{
 			super.width = value;
+			this._width = value;
 			this._drawContent();
 		}
 		
@@ -164,7 +168,26 @@ package org.rockholla.controls.panzoom
 		override public function set height(value:Number):void
 		{
 			super.height = value;
+			this._height = value;
 			this._drawContent();
+		}
+		
+		/**
+		 * Gets the width as set as opposed to the width property (necessary for Flex 3 support)
+		 * 
+		 */
+		public function get widthAsSet():Number
+		{
+			return this._width;
+		}
+		
+		/**
+		 * Gets the height as set as opposed to the height property (necessary for Flex 3 support)
+		 * 
+		 */
+		public function get heightAsSet():Number
+		{
+			return this._height;
 		}
 		
 		/**

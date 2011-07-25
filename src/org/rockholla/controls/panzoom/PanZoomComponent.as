@@ -251,14 +251,10 @@ package org.rockholla.controls.panzoom
 			this._updateViewCenter();
 			if(this.centerOnLoad == true)
 			{
-				this.loadCenterPoint = new Point(this._content.width/2, this._content.height/2);
+				this.loadCenterPoint = new Point(this._content.widthAsSet/2, this._content.heightAsSet/2);
 			}
 			if(this.loadCenterPoint != null)
 			{
-				if(this.loadCenterPoint.x > this._content.width) this.loadCenterPoint.x = this._content.width;
-				if(this.loadCenterPoint.y > this._content.height) this.loadCenterPoint.y = this._content.height;
-				if(this.loadCenterPoint.x < 0) this.loadCenterPoint.x = 0;
-				if(this.loadCenterPoint.y < 0) this.loadCenterPoint.y = 0;
 				this.zoomToPoint(this.loadCenterPoint, this.initialZoomLevel);
 			}
 			else
@@ -333,12 +329,12 @@ package org.rockholla.controls.panzoom
 			
 			this._content = children[0];
 			
-			if(this._content.width <= 0) 
+			if(this._content.widthAsSet <= 0) 
 			{
 				throw new PanZoomComponentError(DIMENSIONS_UNSET_ERROR);
 				return;
 			}
-			if(this._content.height <= 0) 
+			if(this._content.heightAsSet <= 0) 
 			{
 				throw new PanZoomComponentError(DIMENSIONS_UNSET_ERROR);
 				return;
@@ -380,10 +376,8 @@ package org.rockholla.controls.panzoom
 			this._hScrollBar.x = 0;
 			this._hScrollBar.width = unscaledWidth - this._vScrollBar.width;
 			
-			this._hScrollBar.maxScrollPosition = this._content.width * this._scale;
-			this._hScrollBar.pageSize = this._content.width * this._scale;
-			this._vScrollBar.maxScrollPosition = this._content.height * this._scale;
-			this._vScrollBar.pageSize = this._content.height * this._scale;
+			this._hScrollBar.pageSize = this._content.widthAsSet * this._scale;
+			this._vScrollBar.pageSize = this._content.heightAsSet * this._scale;
 			
 			// draw bottom right rect covering up area where scrollbars meet
 			this._bottomRightMask.graphics.clear();
@@ -391,8 +385,8 @@ package org.rockholla.controls.panzoom
 			this._bottomRightMask.graphics.drawRect(this.width - this._vScrollBar.width, this.height - this._hScrollBar.height, this._vScrollBar.width, this._hScrollBar.height);
 			this._bottomRightMask.graphics.endFill();
 			
-			this._hScrollBar.maxScrollPosition = (this._content.width * this._scale) - (this.width - this._vScrollBar.width);
-			this._vScrollBar.maxScrollPosition = (this._content.height * this._scale) - (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0));
+			this._hScrollBar.maxScrollPosition = (this._content.widthAsSet * this._scale) - (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0));
+			this._vScrollBar.maxScrollPosition = (this._content.heightAsSet * this._scale) - (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0));
 			this._hScrollBar.scrollPosition = -1 * this._content.x;
 			this._vScrollBar.scrollPosition = -1 * this._content.y;
 			
@@ -409,22 +403,22 @@ package org.rockholla.controls.panzoom
 		protected function _updateViewCenter():void 
 		{
 			
-			var contentPixelsPerViewPixel:Number = (this._content.width/this._scale)/this._content.width;
-			if((this.width - this._vScrollBar.width) >= (this._content.width * this._scale)) 
+			var contentPixelsPerViewPixel:Number = (this._content.widthAsSet/this._scale)/this._content.widthAsSet;
+			if((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) >= (this._content.widthAsSet * this._scale)) 
 			{
-				this._viewCenter.x = this._content.width/2;
+				this._viewCenter.x = this._content.widthAsSet/2;
 			} 
 			else 
 			{
-				this._viewCenter.x = (-1 * this._contentTopLeft.x * contentPixelsPerViewPixel) + ((this.width - this._vScrollBar.width)/2 * contentPixelsPerViewPixel);
+				this._viewCenter.x = (-1 * this._contentTopLeft.x * contentPixelsPerViewPixel) + ((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))/2 * contentPixelsPerViewPixel);
 			}
-			if((this.height - this._hScrollBar.height) >= (this._content.height * this._scale)) 
+			if((this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0)) >= (this._content.heightAsSet * this._scale)) 
 			{
-				this._viewCenter.y = this._content.height/2;
+				this._viewCenter.y = this._content.heightAsSet/2;
 			} 
 			else 
 			{
-				this._viewCenter.y = (-1 * this._contentTopLeft.y * contentPixelsPerViewPixel) + ((this.height - this._hScrollBar.height)/2 * contentPixelsPerViewPixel);
+				this._viewCenter.y = (-1 * this._contentTopLeft.y * contentPixelsPerViewPixel) + ((this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))/2 * contentPixelsPerViewPixel);
 			}
 			
 		}
@@ -695,6 +689,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onMouseOver(event:MouseEvent):void 
 		{ 
+			
 			if((this.childPreventsPan == true && event.target == this._content) || this.childPreventsPan == false)
 			{
 				this._setCursorHandOpen();
@@ -705,6 +700,7 @@ package org.rockholla.controls.panzoom
 				CursorManager.removeAllCursors();
 				this._cancelNormalMouseEvents(true);
 			} 
+			
 		}
 		
 		/**
@@ -796,17 +792,17 @@ package org.rockholla.controls.panzoom
 			var xLocked:Boolean = false;
 			var yLocked:Boolean = false;
 			var updateViewCenter:Boolean = false;
-			if(this._content.width * this._scale <= (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))) 
+			if(this._content.widthAsSet * this._scale <= (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))) 
 			{
 				// center content on x axis
-				this._contentTopLeft.x = ((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.width * this._scale))/2;
+				this._contentTopLeft.x = ((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.widthAsSet * this._scale))/2;
 				xLocked = true;
 				updateViewCenter = true;
 			}
-			if(this._content.height * this._scale <= (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))) 
+			if(this._content.heightAsSet * this._scale <= (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))) 
 			{
 				// center content on y axis
-				this._contentTopLeft.y = (this.height - (this._content.height * this._scale))/2;
+				this._contentTopLeft.y = (this.height - (this._content.heightAsSet * this._scale))/2;
 				yLocked = true;
 				updateViewCenter = true;
 			}
@@ -818,9 +814,9 @@ package org.rockholla.controls.panzoom
 					this._contentTopLeft.x = 0;
 					updateViewCenter = true;
 				} 
-				else if(this._contentPointInView(this._content.width.toString(), null)) 
+				else if(this._contentPointInView(this._content.widthAsSet.toString(), null)) 
 				{
-					this._contentTopLeft.x = (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.width * this._scale);
+					this._contentTopLeft.x = (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) - (this._content.widthAsSet * this._scale);
 					updateViewCenter = true;
 				}
 			}
@@ -831,9 +827,9 @@ package org.rockholla.controls.panzoom
 					this._contentTopLeft.y = 0;	
 					updateViewCenter = true;
 				} 
-				else if(this._contentPointInView(null, this._content.height.toString())) 
+				else if(this._contentPointInView(null, this._content.heightAsSet.toString())) 
 				{
-					this._contentTopLeft.y = (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0)) - (this._content.height * this._scale);
+					this._contentTopLeft.y = (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0)) - (this._content.heightAsSet * this._scale);
 					updateViewCenter = true;
 				}
 			}
@@ -924,8 +920,8 @@ package org.rockholla.controls.panzoom
 				this._viewCenter.y = this.fixedZoomPoint.y;
 			}
 
-			this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - this._vScrollBar.width)/2)/this._scale)) * this._scale;
-			this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - this._hScrollBar.height)/2)/this._scale)) * this._scale;
+			this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))/2)/this._scale)) * this._scale;
+			this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))/2)/this._scale)) * this._scale;
 			
 			this._enforcePlacementRules();
 			
@@ -1000,15 +996,15 @@ package org.rockholla.controls.panzoom
 			} 
 			else if(cornerName == TOP_RIGHT) 
 			{
-				return this._contentPointInView(this._content.width.toString(), "0");
+				return this._contentPointInView(this._content.widthAsSet.toString(), "0");
 			} 
 			else if(cornerName == BOTTOM_LEFT) 
 			{
-				return this._contentPointInView("0", this._content.height.toString());
+				return this._contentPointInView("0", this._content.heightAsSet.toString());
 			} 
 			else if(cornerName == BOTTOM_RIGHT) 
 			{
-				return this._contentPointInView(this._content.width.toString(), this._content.height.toString());
+				return this._contentPointInView(this._content.widthAsSet.toString(), this._content.heightAsSet.toString());
 			}
 			
 			throw new Error("Invalid corner point name: " + cornerName);
@@ -1028,10 +1024,10 @@ package org.rockholla.controls.panzoom
 			// this function should be run after calculations and BEFORE physical updating
 			// we have top left
 			// if (content top x + (x * scale)) is less than or equal to this.width then x is in view
-			if(x == null || ((this._contentTopLeft.x + (Number(x) * this._scale)) <= (this.width - this._vScrollBar.width) && (this._contentTopLeft.x + (Number(x) * this._scale)) >= 0)) 
+			if(x == null || ((this._contentTopLeft.x + (Number(x) * this._scale)) <= (this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0)) && (this._contentTopLeft.x + (Number(x) * this._scale)) >= 0)) 
 			{
 				// no perform the same calc for y
-				if(y == null || ((this._contentTopLeft.y + (Number(y) * this._scale)) <= (this.height - this._hScrollBar.height) && (this._contentTopLeft.y + (Number(y) * this._scale)) >= 0)) 
+				if(y == null || ((this._contentTopLeft.y + (Number(y) * this._scale)) <= (this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0)) && (this._contentTopLeft.y + (Number(y) * this._scale)) >= 0)) 
 				{
 					return true;
 				}
