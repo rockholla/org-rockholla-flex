@@ -32,6 +32,7 @@ package org.rockholla.controls.panzoom
 	import mx.events.ScrollEventDirection;
 	import mx.managers.CursorManager;
 	
+	import org.rockholla.controls.panzoom.tools.PanZoomTools;
 	import org.rockholla.events.PanZoomEvent;
 	
 	/**
@@ -141,6 +142,9 @@ package org.rockholla.controls.panzoom
 		 * panned and zoomed.
 		 */
 		protected var _content:PanZoomContent;
+		
+		protected var _tools:PanZoomTools = new PanZoomTools();
+		
 		/**
 		 * The minimum zoom level allowed (where 1 is actual size, 100%)
 		 */
@@ -197,6 +201,8 @@ package org.rockholla.controls.panzoom
 		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandClosed")] 
 		private var __iconHandClosed:Class;
+		
+		private var __mouseEventsActivated:Boolean = false;
 		
 		/**
 		 * Constructor
@@ -343,6 +349,7 @@ package org.rockholla.controls.panzoom
 			this.addChild(this._vScrollBar);
 			this.addChild(this._hScrollBar);
 			this.addChild(this._bottomRightMask);
+			this.addChild(this._tools);
 			
 		}
 		
@@ -359,6 +366,10 @@ package org.rockholla.controls.panzoom
 			
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			this._updateScrollBars();
+			
+			this._tools.top = 0;
+			this._tools.right = 0 + (this.panScrollBarsVisible ? this._vScrollBar.width : 0);
+			
 		}	
 		
 		/**
@@ -645,7 +656,7 @@ package org.rockholla.controls.panzoom
 		protected function _activateNormalMouseEvents(isFirstActivation:Boolean = false):void 
 		{
 			
-			if(this._content.hasEventListener(MouseEvent.MOUSE_DOWN) && !isFirstActivation)
+			if(this.__mouseEventsActivated && !isFirstActivation)
 			{
 				return;
 			}
@@ -657,6 +668,7 @@ package org.rockholla.controls.panzoom
 				this.doubleClickEnabled = true;
 				this._content.addEventListener(MouseEvent.DOUBLE_CLICK, _onDoubleClick);
 			}
+			this.__mouseEventsActivated = true;
 			
 		}
 		/**
@@ -678,6 +690,7 @@ package org.rockholla.controls.panzoom
 			{
 				this._content.removeEventListener(MouseEvent.DOUBLE_CLICK, _onDoubleClick);		
 			}
+			this.__mouseEventsActivated = false;
 			
 		}
 		
@@ -712,6 +725,7 @@ package org.rockholla.controls.panzoom
 		protected function _onMouseDown(event:MouseEvent):void 
 		{
 			
+			trace("...........");
 			this._setCursorHandClosed();
 			this._mouseDownPosition.x = this.parent.mouseX;
 			this._mouseDownPosition.y = this.parent.mouseY;
