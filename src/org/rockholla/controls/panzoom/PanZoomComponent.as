@@ -15,7 +15,6 @@
 */
 package org.rockholla.controls.panzoom 
 {	
-	import com.adobe.utils.mousewheel.MouseWheelEnabler;
 	import com.greensock.TweenLite;
 	
 	import flash.events.Event;
@@ -34,6 +33,7 @@ package org.rockholla.controls.panzoom
 	
 	import org.rockholla.controls.panzoom.tools.PanZoomTools;
 	import org.rockholla.events.PanZoomEvent;
+	import org.rockholla.utils.MouseWheelHandler;
 	
 	/**
 	 * Dispatched when the user is zooming in or out
@@ -88,6 +88,8 @@ package org.rockholla.controls.panzoom
 		 */
 		public static const SCROLL_BARS_ACCESS_ERROR:String = "The scrollbars for the PanZoomComponent do not rely on built in scrollbars.  Please access panHorizontalScrollBar and panVerticalScrollBar properties to access the scrollbars.  If you want to hide or show the scrollbars, use the panScrollBarsVisible method.";
 
+		public static const MOUSEWHEEL_JS:String = "function cancelEvent(a){a=a?a:window.event;if(a.stopPropagation){a.stopPropagation()}if(a.preventDefault){a.preventDefault()}a.cancelBubble=true;a.cancel=true;a.returnValue=false;return false}function onMouseWheel(a){var b=0;if(!a){a=window.event}if(a.wheelDelta){b=a.wheelDelta/120;if(window.opera)b=-b}else if(a.detail){b=-a.detail/3}if(isOverSwf(a)){return cancelEvent(a)}return true}function isOverSwf(a){var b;if(a.srcElement){b=a.srcElement.nodeName}else if(a.target){b=a.target.nodeName}if(b.toLowerCase()=='object'||b.toLowerCase()=='embed'){return true}return false}function hookMouseWheel(){if(window.addEventListener){window.addEventListener('DOMMouseScroll',onMouseWheel,false)}window.onmousewheel=document.onmousewheel=onMouseWheel}hookMouseWheel()";
+		
 		/**
 		 * When true, while the mouse is over a child within the <strong>content</strong> container disables normal panning
 		 * by drag and drop.
@@ -136,6 +138,12 @@ package org.rockholla.controls.panzoom
 		 */
 		[Bindable]
 		public var fixedZoomPoint:Point;
+		/**
+		 * If true, then we will disable browser scrolling when over the Flash area of the page
+		 */
+		[Bindable]
+		[Inspectable(defaultValue=true)]
+		public var disableBrowserScrolling:Boolean = true;
 		
 		/**
 		 * This is the container where all custom children are placed.  It represents the bounded area that can be 
@@ -201,7 +209,10 @@ package org.rockholla.controls.panzoom
 		 */
 		[Embed(source="../../assets/icons/iconography.swf", symbol="IconHandClosed")] 
 		private var __iconHandClosed:Class;
-		
+
+		/**
+		 * Tracks whether local mouse events are activated or not
+		 */
 		private var __mouseEventsActivated:Boolean = false;
 		
 		/**
@@ -278,7 +289,9 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onAddedToStage(event:Event):void
 		{
-			MouseWheelEnabler.init(stage);
+			
+			MouseWheelHandler.init(stage);
+			
 		}
 		
 		/**
