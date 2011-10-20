@@ -738,7 +738,6 @@ package org.rockholla.controls.panzoom
 		protected function _onMouseDown(event:MouseEvent):void 
 		{
 			
-			trace("...........");
 			this._setCursorHandClosed();
 			this._mouseDownPosition.x = this.parent.mouseX;
 			this._mouseDownPosition.y = this.parent.mouseY;
