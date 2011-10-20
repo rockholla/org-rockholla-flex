@@ -37,3 +37,7 @@ CHANGE LOG
 - PanZoomComponent: added support for accessing the custom scroll bars, and a property that can be used for showing/hiding the scrollbars
 - PanZoomComponent: fixed problem with setting the scale value manually
 - PanZoomComponent: added validation not yet present for things like ensuring that content dimensions are set, etc.
+
+2.0.1 2011-10-19
+- PanZoomComponent: Addressed some cross-browser mouse wheel issues.  Opera is still unsupported.  Flex/Flash scrollbars are all screwy in Opera in general.
+- PanZoomContent: Fixed bug present when setting custom MOUSE_DOWN handler.
