@@ -59,7 +59,7 @@ package org.rockholla.utils
 				if(ExternalInterface.available)
 				{
 					var id:String = 'eb_' + Math.floor(Math.random()*1000000);
-					ExternalInterface.addCallback(id, function(){});
+					ExternalInterface.addCallback(id, function():void{});
 					ExternalInterface.call(c_jscode);
 					ExternalInterface.call("eb.InitMacMouseWheel", id);
 					ExternalInterface.addCallback('externalMouseEvent', _externalMouseEvent);	
