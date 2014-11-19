@@ -967,8 +967,13 @@ package org.rockholla.controls.panzoom
 		 * @param toScale	the zoom destination scale
 		 * 
 		 */
-		public function zoom(toScale:Number, computeDuration:Boolean = true):void 
+		public function zoom(toScale:Number, computeDuration:Boolean = true, mousePtStage:Point = null):void  
 		{
+			
+			if( this.stage != null )
+			{   var stageCenter:Point = new Point( this.width/2, this.height/2 );
+				stageCenter = this.localToGlobal( stageCenter );
+			}
 			
 			toScale = this._fixToScale(toScale);
 			
@@ -985,8 +990,17 @@ package org.rockholla.controls.panzoom
 
 			this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))/2)/this._scale)) * this._scale;
 			this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))/2)/this._scale)) * this._scale;
+
+			if( mousePtStage != null )
+			{   var dx:Number = ( mousePtStage.x - stageCenter.x );
+				var dy:Number = ( mousePtStage.y - stageCenter.y );
+				
+				this._contentTopLeft.x += dx;
+				this._contentTopLeft.y += dy;
+			}
 			
-			this._enforcePlacementRules();
+			if( mousePtStage == null )
+				this._enforcePlacementRules();
 			
 			TweenLite.to(this._content, duration, { scaleX: this._scale, scaleY: this._scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
 			
@@ -1001,9 +1015,12 @@ package org.rockholla.controls.panzoom
 		 * @param directionalSpeed	the vector-like value, designating a direction (positive or negative) and a magnitude (how large or small it is)
 		 * 
 		 */
-		public function zoomDirectional(directionalSpeed:int):void 
+		public function zoomDirectional(directionalSpeed:int, mousePtStage:Point = null):void 
 		{
-			this.zoom(this._scale + (.04 * directionalSpeed), false);
+			if( mousePtStage == null )
+				this.zoom(this._scale + (.04 * directionalSpeed), false);
+			else
+				this.zoom(this._scale + (.04 * directionalSpeed), false, mousePtStage);
 		}
 		
 		/**
@@ -1014,6 +1031,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onMouseWheel(event:MouseEvent):void 
 		{ 
+			var curMousePtStage:Point = null;
 			
 			if(this.mouseWheelZoomingEnabled)
 			{
@@ -1021,8 +1039,17 @@ package org.rockholla.controls.panzoom
 				{
 					this._viewCenter.x = this._content.mouseX;
 					this._viewCenter.y = this._content.mouseY;
+					
+					curMousePtStage = new Point();
+					curMousePtStage.x = event.stageX;
+					curMousePtStage.y = event.stageY;
 				}
-				this.zoomDirectional(event.delta);	
+
+				if( curMousePtStage != null )
+					this.zoomDirectional(event.delta, curMousePtStage);
+				else
+					this.zoomDirectional(event.delta);
+	
 			} 
 			else
 			{
