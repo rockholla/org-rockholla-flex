@@ -756,8 +756,11 @@ package org.rockholla.controls.panzoom
 		protected function _onMouseDownMove(event:MouseEvent):void 
 		{
 			
-			this._content.x = this._contentTopLeft.x - (this._mouseDownPosition.x - this.parent.mouseX);
-			this._content.y = this._contentTopLeft.y - (this._mouseDownPosition.y - this.parent.mouseY);
+			if( this.parent.mouseX < this.width )
+				this._content.x = this._contentTopLeft.x - (this._mouseDownPosition.x - this.parent.mouseX);
+			if( this.parent.mouseY < this.height )
+				this._content.y = this._contentTopLeft.y - (this._mouseDownPosition.y - this.parent.mouseY);
+			
 			this.dispatchEvent(new PanZoomEvent(PanZoomEvent.PAN));
 			
 		}
