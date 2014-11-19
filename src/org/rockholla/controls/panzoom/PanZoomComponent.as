@@ -91,6 +91,35 @@ package org.rockholla.controls.panzoom
 		public static const MOUSEWHEEL_JS:String = "function cancelEvent(a){a=a?a:window.event;if(a.stopPropagation){a.stopPropagation()}if(a.preventDefault){a.preventDefault()}a.cancelBubble=true;a.cancel=true;a.returnValue=false;return false}function onMouseWheel(a){var b=0;if(!a){a=window.event}if(a.wheelDelta){b=a.wheelDelta/120;if(window.opera)b=-b}else if(a.detail){b=-a.detail/3}if(isOverSwf(a)){return cancelEvent(a)}return true}function isOverSwf(a){var b;if(a.srcElement){b=a.srcElement.nodeName}else if(a.target){b=a.target.nodeName}if(b.toLowerCase()=='object'||b.toLowerCase()=='embed'){return true}return false}function hookMouseWheel(){if(window.addEventListener){window.addEventListener('DOMMouseScroll',onMouseWheel,false)}window.onmousewheel=document.onmousewheel=onMouseWheel}hookMouseWheel()";
 		
 		/**
+		 * When set to true, it turns off the panning feature of the library.
+		 * It is meant to be hotpluggable, i.e., it could be enabled disabled
+		 * on the go, without affecting functionality.
+		 */
+		public var _panOff:Boolean = true;
+		[Bindable]
+		[Inspectable (defaultValue=true)]
+		public function get panOff():Boolean { return _panOff; }
+		public function set panOff(val:Boolean):void 
+		{	if( _panOff == val )
+			return;
+			
+			_panOff = val;
+			
+			if( val == false )
+			{	this._setCursorHandOpen();
+				
+				if(this._content != null)
+					this._activateNormalMouseEvents();
+			}
+			else
+			{	CursorManager.removeAllCursors();
+				
+				if(this._content != null)
+					this._cancelNormalMouseEvents(true);
+			}
+		}
+		
+		/**
 		 * When true, while the mouse is over a child within the <strong>content</strong> container disables normal panning
 		 * by drag and drop.
 		 */
@@ -716,7 +745,7 @@ package org.rockholla.controls.panzoom
 		protected function _onMouseOver(event:MouseEvent):void 
 		{ 
 			
-			if((this.childPreventsPan == true && event.target == this._content) || this.childPreventsPan == false)
+			if(((this.childPreventsPan == true && event.target == this._content) || this.childPreventsPan == false) && this.panOff == false)
 			{
 				this._setCursorHandOpen();
 				this._activateNormalMouseEvents();
