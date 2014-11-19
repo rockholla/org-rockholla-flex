@@ -91,6 +91,35 @@ package org.rockholla.controls.panzoom
 		public static const MOUSEWHEEL_JS:String = "function cancelEvent(a){a=a?a:window.event;if(a.stopPropagation){a.stopPropagation()}if(a.preventDefault){a.preventDefault()}a.cancelBubble=true;a.cancel=true;a.returnValue=false;return false}function onMouseWheel(a){var b=0;if(!a){a=window.event}if(a.wheelDelta){b=a.wheelDelta/120;if(window.opera)b=-b}else if(a.detail){b=-a.detail/3}if(isOverSwf(a)){return cancelEvent(a)}return true}function isOverSwf(a){var b;if(a.srcElement){b=a.srcElement.nodeName}else if(a.target){b=a.target.nodeName}if(b.toLowerCase()=='object'||b.toLowerCase()=='embed'){return true}return false}function hookMouseWheel(){if(window.addEventListener){window.addEventListener('DOMMouseScroll',onMouseWheel,false)}window.onmousewheel=document.onmousewheel=onMouseWheel}hookMouseWheel()";
 		
 		/**
+		 * When set to true, it turns off the panning feature of the library.
+		 * It is meant to be hotpluggable, i.e., it could be enabled disabled
+		 * on the go, without affecting functionality.
+		 */
+		public var _panOff:Boolean = true;
+		[Bindable]
+		[Inspectable (defaultValue=true)]
+		public function get panOff():Boolean { return _panOff; }
+		public function set panOff(val:Boolean):void 
+		{	if( _panOff == val )
+			return;
+			
+			_panOff = val;
+			
+			if( val == false )
+			{	this._setCursorHandOpen();
+				
+				if(this._content != null)
+					this._activateNormalMouseEvents();
+			}
+			else
+			{	CursorManager.removeAllCursors();
+				
+				if(this._content != null)
+					this._cancelNormalMouseEvents(true);
+			}
+		}
+		
+		/**
 		 * When true, while the mouse is over a child within the <strong>content</strong> container disables normal panning
 		 * by drag and drop.
 		 */
@@ -716,7 +745,7 @@ package org.rockholla.controls.panzoom
 		protected function _onMouseOver(event:MouseEvent):void 
 		{ 
 			
-			if((this.childPreventsPan == true && event.target == this._content) || this.childPreventsPan == false)
+			if(((this.childPreventsPan == true && event.target == this._content) || this.childPreventsPan == false) && this.panOff == false)
 			{
 				this._setCursorHandOpen();
 				this._activateNormalMouseEvents();
@@ -756,8 +785,11 @@ package org.rockholla.controls.panzoom
 		protected function _onMouseDownMove(event:MouseEvent):void 
 		{
 			
-			this._content.x = this._contentTopLeft.x - (this._mouseDownPosition.x - this.parent.mouseX);
-			this._content.y = this._contentTopLeft.y - (this._mouseDownPosition.y - this.parent.mouseY);
+			if( this.parent.mouseX < this.width )
+				this._content.x = this._contentTopLeft.x - (this._mouseDownPosition.x - this.parent.mouseX);
+			if( this.parent.mouseY < this.height )
+				this._content.y = this._contentTopLeft.y - (this._mouseDownPosition.y - this.parent.mouseY);
+			
 			this.dispatchEvent(new PanZoomEvent(PanZoomEvent.PAN));
 			
 		}
@@ -935,8 +967,13 @@ package org.rockholla.controls.panzoom
 		 * @param toScale	the zoom destination scale
 		 * 
 		 */
-		public function zoom(toScale:Number, computeDuration:Boolean = true):void 
+		public function zoom(toScale:Number, computeDuration:Boolean = true, mousePtStage:Point = null):void  
 		{
+			
+			if( this.stage != null )
+			{   var stageCenter:Point = new Point( this.width/2, this.height/2 );
+				stageCenter = this.localToGlobal( stageCenter );
+			}
 			
 			toScale = this._fixToScale(toScale);
 			
@@ -953,8 +990,17 @@ package org.rockholla.controls.panzoom
 
 			this._contentTopLeft.x = 0 - (this._viewCenter.x - (((this.width - (this.panScrollBarsVisible ? this._vScrollBar.width : 0))/2)/this._scale)) * this._scale;
 			this._contentTopLeft.y = 0 - (this._viewCenter.y - (((this.height - (this.panScrollBarsVisible ? this._hScrollBar.height : 0))/2)/this._scale)) * this._scale;
+
+			if( mousePtStage != null )
+			{   var dx:Number = ( mousePtStage.x - stageCenter.x );
+				var dy:Number = ( mousePtStage.y - stageCenter.y );
+				
+				this._contentTopLeft.x += dx;
+				this._contentTopLeft.y += dy;
+			}
 			
-			this._enforcePlacementRules();
+			if( mousePtStage == null )
+				this._enforcePlacementRules();
 			
 			TweenLite.to(this._content, duration, { scaleX: this._scale, scaleY: this._scale, x: this._contentTopLeft.x, y: this._contentTopLeft.y });
 			
@@ -969,9 +1015,12 @@ package org.rockholla.controls.panzoom
 		 * @param directionalSpeed	the vector-like value, designating a direction (positive or negative) and a magnitude (how large or small it is)
 		 * 
 		 */
-		public function zoomDirectional(directionalSpeed:int):void 
+		public function zoomDirectional(directionalSpeed:int, mousePtStage:Point = null):void 
 		{
-			this.zoom(this._scale + (.04 * directionalSpeed), false);
+			if( mousePtStage == null )
+				this.zoom(this._scale + (.04 * directionalSpeed), false);
+			else
+				this.zoom(this._scale + (.04 * directionalSpeed), false, mousePtStage);
 		}
 		
 		/**
@@ -982,6 +1031,7 @@ package org.rockholla.controls.panzoom
 		 */
 		protected function _onMouseWheel(event:MouseEvent):void 
 		{ 
+			var curMousePtStage:Point = null;
 			
 			if(this.mouseWheelZoomingEnabled)
 			{
@@ -989,8 +1039,17 @@ package org.rockholla.controls.panzoom
 				{
 					this._viewCenter.x = this._content.mouseX;
 					this._viewCenter.y = this._content.mouseY;
+					
+					curMousePtStage = new Point();
+					curMousePtStage.x = event.stageX;
+					curMousePtStage.y = event.stageY;
 				}
-				this.zoomDirectional(event.delta);	
+
+				if( curMousePtStage != null )
+					this.zoomDirectional(event.delta, curMousePtStage);
+				else
+					this.zoomDirectional(event.delta);
+	
 			} 
 			else
 			{
